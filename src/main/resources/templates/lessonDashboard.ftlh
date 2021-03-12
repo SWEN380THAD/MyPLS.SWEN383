@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!--
-This is a the main Dashboard
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html lang="en">
 <head>
@@ -68,7 +69,7 @@ This is a the main Dashboard
 
         </div>
         <div class="info">
-          <a href="#" class="d-block">${user.email}</a>
+          <a href="#" class="d-block">${email}</a>
         </div>
       </div>
 
@@ -85,7 +86,7 @@ This is a the main Dashboard
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Starter Page</h1>
+            <h1 class="m-0"> ${email} Lessons</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -104,17 +105,17 @@ This is a the main Dashboard
         <div class="row">
           <div class="col-lg-6">
 
-          <#list courseList as courses>
+          <#list lessonList as lesson>
 
              <div class="card card-primary card-outline">
                <div class="card-header">
-                 <h5 class="m-0">${courses.name}</h5>
+                 <h5 class="m-0">${lesson.name}</h5>
                </div>
                <div class="card-body">
                  <h6 class="card-title"></h6>
 
-                  <p class="card-text">${courses.description}.</p>
-                  <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
+                  <p class="card-text">${lesson.name}.</p>
+
                 </div>
                </div>
 

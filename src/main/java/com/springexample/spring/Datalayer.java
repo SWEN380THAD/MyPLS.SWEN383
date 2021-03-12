@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Datalayer {
 
@@ -189,6 +191,101 @@ public class Datalayer {
         return i;
 
     }// end addProfessor
+
+    public ArrayList<Course> getLearnerCourses(String _email){
+        ArrayList<Course> _cList = new ArrayList<Course>();
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT \n" +
+                    "name\n" +
+                    ",description\n" +
+                    ",requierments\n" +
+                    ",prereqs \n" +
+                    ",c.course_id \n" +
+                     "FROM swenproject.users u\n" +
+                    " join swenproject.user_courses uc on u.user_id = uc.user_id\n" +
+                    " join swenproject.courses c on uc.course_id = c.course_id\n" +
+                    " where email ='"+_email+"'";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                Course course = new Course();
+                course.setName(rs.getString(1));
+                course.setDescription(rs.getString(2));
+                course.setRequirements(rs.getString(3));
+                course.setPrereqs(rs.getString(4));
+                course.setId(rs.getInt(5));
+
+                _cList.add(course);
+
+            }
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _cList;
+
+    }
+
+    public ArrayList<Lesson> getLearnerLessons(String _course){
+        ArrayList<Lesson> _lessonsList = new ArrayList<Lesson>();
+        try{
+            stmt = conn.createStatement();
+
+            sql =   "  SELECT\n" +
+                    "    l.lesson_id\n" +
+                    ",l.name\n" +
+                    ",l.minimum_score\n" +
+
+                    "    FROM swenproject.users u\n" +
+                    "    join swenproject.user_courses uc on u.user_id = uc.user_id\n" +
+                    "    join swenproject.courses c on uc.course_id = c.course_id\n" +
+                    "    join swenproject.lessons l on c.course_id = l.course_id\n" +
+                    "    where l.course_id ='"+_course+"'\n" +
+                    "    order by l.order;";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                Lesson lesson = new Lesson();
+                lesson.setId(rs.getInt(1));
+                lesson.setName(rs.getString(2));
+                lesson.setMinimumScore(rs.getString(3));
+
+
+                _lessonsList.add(lesson);
+
+            }
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _lessonsList;
+
+    }
+
+
+
 
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";
