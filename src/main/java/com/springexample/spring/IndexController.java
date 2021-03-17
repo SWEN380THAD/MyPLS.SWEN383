@@ -17,6 +17,7 @@ public class IndexController
 {
     public ArrayList<Course> courseList = new ArrayList<Course>();
 
+
     @GetMapping("/")
     public String index() { //redirect page "/" to "/index.ftlh"
       //return "index";
@@ -38,9 +39,9 @@ public class IndexController
         String _page = "dashboard";
         String _pw = Application.dl.encrypt(pw);//encrypt password given by user
         Application.dl.connect();
-        User _user = Application.dl.getUser(email);//retreive all user information based on email
+        Application.currentUser = Application.dl.getUser(email);//retreive all user information based on email
 
-        if (!_user.getPw().equals(_pw)) { //validate password given against password in database
+        if (!Application.currentUser.getPw().equals(_pw)) { //validate password given against password in database
             //if not true then send back the email and msg of "Wrong Email or Password" to the index page
             model.addAttribute("email", email);
             model.addAttribute("msg", "Wrong Email or Password");
@@ -48,9 +49,12 @@ public class IndexController
         }else{
 
             //if true, set the user as variable to pass to user dashboard page
-            redirectAttributes.addFlashAttribute("user", _user);
-            redirectAttributes.addFlashAttribute("courseList",  Application.dl.getLearnerCourses(email));
-
+            redirectAttributes.addFlashAttribute("user", Application.currentUser);
+            if(Application.currentUser.getType().equals("Admin")){
+                redirectAttributes.addFlashAttribute("courseList", Application.dl.getAllCourses());
+            }else {
+                redirectAttributes.addFlashAttribute("courseList", Application.dl.getUserCourses(email));
+            }
 
         }
         Application.dl.close();

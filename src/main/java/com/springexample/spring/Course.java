@@ -6,7 +6,7 @@ public class Course {
     private int id;
     private String name;
     private String description;
-    private String prereqs;
+    private String prerequisites;
     private String requirements;
 
 
@@ -34,12 +34,12 @@ public class Course {
         this.description = _description;
     }
 
-    public String getPrereqs() {//return user type
-        return prereqs;
+    public String getPrerequisites() {//return user type
+        return prerequisites;
     }
 
-    public void setPrereqs(String _prereqs) {//set user type
-        this.prereqs = _prereqs;
+    public void setPrereqs(String _prereq) {
+        this.prerequisites = _prereq;
     }
 
     public String getRequirements() {//return user type

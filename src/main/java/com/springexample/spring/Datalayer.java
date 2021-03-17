@@ -192,21 +192,24 @@ public class Datalayer {
 
     }// end addProfessor
 
-    public ArrayList<Course> getLearnerCourses(String _email){
+    public ArrayList<Course> getUserCourses(String _email){
         ArrayList<Course> _cList = new ArrayList<Course>();
+
+
+
         try{
             stmt = conn.createStatement();
 
-            sql = "SELECT \n" +
+            sql = "SELECT DISTINCT \n" +
                     "name\n" +
                     ",description\n" +
                     ",requierments\n" +
                     ",prereqs \n" +
                     ",c.course_id \n" +
-                     "FROM swenproject.users u\n" +
+                    "FROM swenproject.users u\n" +
                     " join swenproject.user_courses uc on u.user_id = uc.user_id\n" +
                     " join swenproject.courses c on uc.course_id = c.course_id\n" +
-                    " where email ='"+_email+"'";
+                    " where email like'"+_email+"'";
 
 
             System.out.println("Statment to be Executed: "+ sql);
@@ -238,6 +241,162 @@ public class Datalayer {
 
     }
 
+    public ArrayList<Course> getAllCourses(){
+        ArrayList<Course> _cList = new ArrayList<Course>();
+
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT DISTINCT \n" +
+                    "name\n" +
+                    ",description\n" +
+                    ",requierments\n" +
+                    ",prereqs \n" +
+                    ",c.course_id \n" +
+                    "FROM swenproject.courses c";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                Course course = new Course();
+                course.setName(rs.getString(1));
+                course.setDescription(rs.getString(2));
+                course.setRequirements(rs.getString(3));
+                course.setPrereqs(rs.getString(4));
+                course.setId(rs.getInt(5));
+
+                _cList.add(course);
+
+            }
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _cList;
+
+    }
+    public Course getCourse(String course_id){
+        Course course = new Course();
+
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT DISTINCT \n" +
+                    "name\n" +
+                    ",description\n" +
+                    ",requierments\n" +
+                    ",prereqs \n" +
+                    ",c.course_id \n" +
+                    "FROM swenproject.courses c\n"+
+                    "WHERE c.course_id = "+course_id;
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            rs.next();
+
+
+                course.setName(rs.getString(1));
+                course.setDescription(rs.getString(2));
+                course.setRequirements(rs.getString(3));
+                course.setPrereqs(rs.getString(4));
+                course.setId(rs.getInt(5));
+
+
+
+
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return course;
+
+    }
+    public void deleteCourse(String courseid){
+
+
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "DELETE \n" +
+                    "FROM swenproject.courses\n"+
+                    "WHERE course_id = "+courseid
+                    ;
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+             stmt.executeUpdate(sql);
+
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+
+
+    }
+    public void updateCourse(Course _course){
+
+
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "UPDATE swenproject.courses\n"+
+                    "SET "+
+                    "name = '"+_course.getName()+"'\n" +
+                    ",description = '"+_course.getDescription()+"'\n" +
+                    ",requierments = '"+_course.getRequirements()+"'\n" +
+                    ",prereqs = '"+_course.getPrerequisites()+"' \n" +
+                    "WHERE course_id = "+_course.getId()
+            ;
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            stmt.executeUpdate(sql);
+
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+
+
+    }
     public ArrayList<Lesson> getLearnerLessons(String _course){
         ArrayList<Lesson> _lessonsList = new ArrayList<Lesson>();
         try{
@@ -285,7 +444,26 @@ public class Datalayer {
     }
 
 
+    public void addCourse(Course _course){
+       try{
+        PreparedStatement prepState = conn.prepareStatement("INSERT INTO courses (description,requierments, prereqs, name) values(  ?, ?, ?, ?)");
 
+
+
+        prepState.setString(1, _course.getDescription());
+        prepState.setString(2, _course.getRequirements());
+        prepState.setString(3, _course.getPrerequisites());
+        prepState.setString(4, _course.getName());
+        System.out.println("Statment to be Executed: " + prepState);
+        prepState.executeUpdate();
+
+       } catch (SQLException sqle) {
+           System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+           System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+           sqle.printStackTrace();
+       }// end of catch
+
+    }
 
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";

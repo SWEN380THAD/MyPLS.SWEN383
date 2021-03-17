@@ -13,11 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class DashboardController
 {
-    /*@GetMapping("/")
-    public String index() { //redirect page "/" to "/index.ftlh"
-      //return "index";
-        return "redirect:/index";
-    }*/
+
 
 
 
@@ -38,21 +34,33 @@ public class DashboardController
         return "redirect:/lessonDashboard";
     } //returns lesson info page
 
+    @GetMapping("/dashboard/deleteCourse/{course_id}")
+    public String deleteCourse(@PathVariable("course_id") String course_id,  RedirectAttributes redirectAttributes ) {
+        Application.dl.connect();
+        Application.dl.deleteCourse(course_id);
+        redirectAttributes.addFlashAttribute("courseList",Application.dl.getAllCourses());
+        redirectAttributes.addFlashAttribute("course", course_id);
+        redirectAttributes.addFlashAttribute("user",Application.currentUser);
+        Application.dl.close();
+        return "redirect:/dashboard";
+    } //returns lesson info page
+
     @PostMapping("/dashboard")
     public String indexPost(String email, String  pw, Model model) { //this codes runs after a user submits the form on teh index.ftlh page
         String _page = "dashboard";
         String _pw = Application.dl.encrypt(pw);//encrypt password given by user
         Application.dl.connect();
-        User _user = Application.dl.getUser(email);//retreive all user information based on email
+       // IncurrentUser =  Application.dl.getUser(email);//retreive all user information based on email
+
         Application.dl.close();
-        if (!_user.getPw().equals(_pw)) { //validate password given against password in database
+        if (!Application.currentUser.getPw().equals(_pw)) { //validate password given against password in database
             //if not true then send back the email and msg of "Wrong Email or Password" to the index page
             model.addAttribute("email", email);
             model.addAttribute("msg", "Wrong Email or Password");
             _page = "index";
         }else{
             //if true, set the user as variable to pass to user dashboard page
-            model.addAttribute("user", _user);
+            model.addAttribute("user", Application.currentUser);
 
         }
         return _page;
@@ -61,6 +69,22 @@ public class DashboardController
     @GetMapping("/lessonDashboard")
     public String lessonGet(Model model ) {
         return "lessonDashboard";
+    } //returns lesson info page
+
+    @GetMapping("/addCourseForm/{email}")
+    public String addCourse(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute(Application.currentUser);
+        return "redirect:/addCourseForm";
+    } //returns lesson info page
+
+    @GetMapping("/updateCourse/{email}/{course_id}")
+    public String updateCourse(@PathVariable("email") String _email,@PathVariable("course_id") String course_id,RedirectAttributes redirectAttributes) {
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("course",Application.dl.getCourse(course_id));
+        redirectAttributes.addFlashAttribute(Application.currentUser);
+        Application.dl .close();
+        return "redirect:/updateCourseForm";
     } //returns lesson info page
 
 
