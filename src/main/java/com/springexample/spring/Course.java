@@ -3,19 +3,19 @@ package com.springexample.spring;
 //this class creates a user of MyPLS and gets/sets their information.
 public class Course {
 
-    private int id;
+    private String courseID;
     private String name;
     private String description;
     private String prerequisites;
     private String requirements;
 
 
-    public int getId() {//return user password
-        return id;
+    public String getId() {//return user password
+        return courseID;
     }
 
-    public void setId(int _id) {//set user password
-        this.id = _id;
+    public void setId(String  courseid) {//set user password
+        this.courseID = courseid;
     }
 
     public String getName() {//return user password
@@ -38,8 +38,8 @@ public class Course {
         return prerequisites;
     }
 
-    public void setPrereqs(String _prereq) {
-        this.prerequisites = _prereq;
+    public void setPrerequisites(String _prerequisites) {
+        this.prerequisites = _prerequisites;
     }
 
     public String getRequirements() {//return user type

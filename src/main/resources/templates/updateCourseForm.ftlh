@@ -133,7 +133,7 @@ This The ADD COURSE FORM
                             <div class="form-group row">
                               <label class="col-sm-2 col-form-label">Course ID</label>
                               <div class="col-sm-10">
-                                <input type="text" class="form-control"  value=${course.id} name="id" disabled>
+                                <input type="text" class="form-control"  value=${course.id} name="id" >
                               </div>
                             </div>
                              <div class="form-group row">

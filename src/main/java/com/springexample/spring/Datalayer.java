@@ -219,8 +219,8 @@ public class Datalayer {
                 course.setName(rs.getString(1));
                 course.setDescription(rs.getString(2));
                 course.setRequirements(rs.getString(3));
-                course.setPrereqs(rs.getString(4));
-                course.setId(rs.getInt(5));
+                course.setPrerequisites(rs.getString(4));
+                course.setId(rs.getString(5));
 
                 _cList.add(course);
 
@@ -264,8 +264,8 @@ public class Datalayer {
                 course.setName(rs.getString(1));
                 course.setDescription(rs.getString(2));
                 course.setRequirements(rs.getString(3));
-                course.setPrereqs(rs.getString(4));
-                course.setId(rs.getInt(5));
+                course.setPrerequisites(rs.getString(4));
+                course.setId(rs.getString(5));
 
                 _cList.add(course);
 
@@ -310,8 +310,8 @@ public class Datalayer {
                 course.setName(rs.getString(1));
                 course.setDescription(rs.getString(2));
                 course.setRequirements(rs.getString(3));
-                course.setPrereqs(rs.getString(4));
-                course.setId(rs.getInt(5));
+                course.setPrerequisites(rs.getString(4));
+                course.setId(rs.getString(5));
 
 
 
