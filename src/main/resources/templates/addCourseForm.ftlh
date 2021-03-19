@@ -26,7 +26,7 @@ This The ADD COURSE FORM
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="/dashboard" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Available Courses</a>
@@ -78,10 +78,10 @@ This The ADD COURSE FORM
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="/addcourse" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Add Course
+             <a href="/addDiscussionForm/${user.email}" class="nav-link active">
+                          <i class="nav-icon fas fa-tachometer-alt"></i>
+                          <p>
+                            Add Discussion
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

@@ -465,6 +465,27 @@ public class Datalayer {
 
     }
 
+    public void addDiscussion(DiscussionGroup _discussion){
+        try{
+            PreparedStatement prepState = conn.prepareStatement("INSERT INTO discussiongroups (group_name, group_desc) values(  ?, ?)");
+
+
+
+
+            prepState.setString(1, _discussion.getName());
+            prepState.setString(2, _discussion.getDescription());
+
+            System.out.println("Statment to be Executed: " + prepState);
+            prepState.executeUpdate();
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+    }//end AddDiscussion
+
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";
         String value = new String(secret);

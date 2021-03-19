@@ -49,11 +49,13 @@ public class IndexController
         }else{
 
             //if true, set the user as variable to pass to user dashboard page
-            redirectAttributes.addFlashAttribute("user", Application.currentUser);
+           // redirectAttributes.addFlashAttribute("user", Application.currentUser);
             if(Application.currentUser.getType().equals("Admin")){
-                redirectAttributes.addFlashAttribute("courseList", Application.dl.getAllCourses());
+                Application.courseList = Application.dl.getAllCourses();
+                //redirectAttributes.addFlashAttribute("courseList", Application.dl.getAllCourses());
             }else {
-                redirectAttributes.addFlashAttribute("courseList", Application.dl.getUserCourses(email));
+                Application.courseList=Application.dl.getUserCourses(email);
+              //  redirectAttributes.addFlashAttribute("courseList", Application.dl.getUserCourses(email));
             }
 
         }

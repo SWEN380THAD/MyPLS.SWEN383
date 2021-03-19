@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-This is a the main Dashboard
+This The ADD COURSE FORM
 -->
 <html lang="en">
 <head>
@@ -26,14 +26,11 @@ This is a the main Dashboard
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="/dashboard" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Available Courses</a>
       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-              <a href="#" class="nav-link">Discussion Groups</a>
-            </li>
       <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Feedback</a>
             </li>
@@ -81,23 +78,13 @@ This is a the main Dashboard
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="/addCourseForm/${user.email}" class="nav-link active">
+            <a href="/addcourse" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Add Course
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-
-          </li>
-          <li class="nav-item menu-open">
-             <a href="/addDiscussionForm/${user.email}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-               <p>
-                 Add Group
-                 <i class="right fas fa-angle-left"></i>
-               </p>
-             </a>
 
           </li>
 
@@ -120,8 +107,8 @@ This is a the main Dashboard
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-             <!-- <li class="breadcrumb-item active">Starter Page</li> -->
+              <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+             <!-- <li class="breadcrumb-item active">Discussions</li> -->
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -135,30 +122,36 @@ This is a the main Dashboard
         <div class="row">
           <div class="col-lg-6">
 
-          <#list courseList as courses>
+          <div class="card card-info">
+                         <div class="card-header">
+                           <h3 class="card-title"><#if msg?? ><span style="color:red">${msg}</span><#else>Add Discussion</#if></h3>
+                            </div>
+                         <!-- /.card-header -->
+                         <!-- form start -->
+                         <form class="form-horizontal" action="/addDiscussionForm" method="post">
+                           <div class="card-body">
+                             <div class="form-group row">
+                               <label class="col-sm-2 col-form-label">Discussion Name</label>
+                               <div class="col-sm-10">
+                                 <input type="text" class="form-control"  placeholder="Name" name="name">
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                                   <label  class="col-sm-2 col-form-label">Course Description</label>
+                                   <div class="col-sm-10">
+                                       <textarea class="form-control" rows ="3"  placeholder="Description ..." name ="description"></textarea>
+                                   </div>
+                              </div>
 
-             <div class="card card-primary card-outline">
-               <div class="card-header">
-                 <h5 class="m-0">${courses.name}</h5>
-               </div>
-               <div class="card-body">
-                 <h4 class="card-title">-Prerequisites-</h4></br>
-                  <p class="card-text">${courses.prerequisites}.</p>
-                  <h4 class="card-title">-Requirements-</h4></br>
-                  <p class="card-text">${courses.requirements}.</p>
-                  <h4 class="card-title">-Description-</h4></br>
-                  <p class="card-text">${courses.description}.</p>
-                  <#if user.type == "Admin">
-                     <a href="dashboard/deleteCourse/${courses.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Delete Course</a>
-                     <a href="/updateCourse/${user.email}/${courses.id}" class="btn btn-primary">Update Course</a>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">View Course Lessons</a>
-                  <#else>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
-                  </#if>
-                </div>
-               </div>
-
-          </#list>
+                           </div>
+                           <!-- /.card-body -->
+                           <div class="card-footer">
+                             <button type="submit" class="btn btn-info">Submit</button>
+                             <button type="reset" class="btn btn-default float-right">Cancel</button>
+                           </div>
+                           <!-- /.card-footer -->
+                         </form>
+                       </div>
 
 
         </div>
@@ -169,26 +162,6 @@ This is a the main Dashboard
   </div>
   <!-- /.content-wrapper -->
 
-        <div class="modal modal-success fade" id="modal-success">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Success Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>course has been deleted</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

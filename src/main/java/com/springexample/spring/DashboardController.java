@@ -20,7 +20,8 @@ public class DashboardController
 
     @GetMapping("/dashboard")
     public String indexGet( Model model) {
-
+        model.addAttribute("courseList",Application.courseList);
+        model.addAttribute("user",Application.currentUser);
         return "dashboard";
     } //returns index page
 
@@ -76,6 +77,13 @@ public class DashboardController
 
         redirectAttributes.addFlashAttribute(Application.currentUser);
         return "redirect:/addCourseForm";
+    } //returns lesson info page
+
+    @GetMapping("/addDiscussionForm/{email}")
+    public String addDiscussion(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute(Application.currentUser);
+        return "redirect:/addDiscussionForm";
     } //returns lesson info page
 
     @GetMapping("/updateCourse/{email}/{course_id}")
