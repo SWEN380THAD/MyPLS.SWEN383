@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+
 //controls the functionality of the index.ftlh page.
 //the variables created here can be passed to the index.ftlh page.
 @Controller
@@ -93,6 +95,17 @@ public class DashboardController
         redirectAttributes.addFlashAttribute(Application.currentUser);
         Application.dl .close();
         return "redirect:/updateCourseForm";
+    } //returns lesson info page
+
+    @GetMapping("/discussionDashboard/{email}")
+    public String discussionDashboard(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
+        Application.dl.connect();
+        ArrayList<DiscussionGroup> groupList = new ArrayList<>(Application.dl.getAllDiscussions());
+        Application.dl.close();
+        redirectAttributes.addFlashAttribute("user",Application.currentUser);
+        redirectAttributes.addFlashAttribute("groupList",groupList);
+        Application.dl .close();
+        return "redirect:/discussionDashboard";
     } //returns lesson info page
 
 

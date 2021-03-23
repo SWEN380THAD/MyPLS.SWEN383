@@ -32,7 +32,7 @@ This is a the main Dashboard
               <a href="#" class="nav-link">Available Courses</a>
       </li>
        <li class="nav-item d-none d-sm-inline-block">
-              <a href="/discussionDashboard/${user.email}" class="nav-link">Discussion Groups</a>
+              <a href="#" class="nav-link">Discussion Groups</a>
             </li>
       <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Feedback</a>
@@ -135,23 +135,18 @@ This is a the main Dashboard
         <div class="row">
           <div class="col-lg-6">
 
-          <#list courseList as courses>
+          <#list groupList as group>
 
              <div class="card card-primary card-outline">
                <div class="card-header">
-                 <h5 class="m-0">${courses.name}</h5>
+                 <h5 class="m-0">${group.name}</h5>
                </div>
                <div class="card-body">
-                 <h4 class="card-title">-Prerequisites-</h4></br>
-                  <p class="card-text">${courses.prerequisites}.</p>
-                  <h4 class="card-title">-Requirements-</h4></br>
-                  <p class="card-text">${courses.requirements}.</p>
-                  <h4 class="card-title">-Description-</h4></br>
-                  <p class="card-text">${courses.description}.</p>
+                  <h4 class="card-title">-Discussion Description-</h4></br>
+                  <p class="card-text">${group.description}.</p>
                   <#if user.type == "Admin">
-                     <a href="dashboard/deleteCourse/${courses.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Delete Course</a>
-                     <a href="/updateCourse/${user.email}/${courses.id}" class="btn btn-primary">Update Course</a>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">View Course Lessons</a>
+                     <a href="openDiscussion/${group.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Open Discussion</a>
+
                   <#else>
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
                   </#if>

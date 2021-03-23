@@ -465,6 +465,50 @@ public class Datalayer {
 
     }
 
+    public ArrayList<DiscussionGroup> getAllDiscussions(){
+
+        ArrayList<DiscussionGroup> _discussionList = new ArrayList<DiscussionGroup>();
+        try{
+            stmt = conn.createStatement();
+
+            sql =   "  SELECT\n" +
+                    " g.group_id\n" +
+                    " ,g.group_name\n" +
+                    ",g.group_desc\n" +
+                    ",g.created\n" +
+
+                    "    FROM swenproject.discussiongroups g\n" +
+                    "    order by g.created;";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                DiscussionGroup group = new DiscussionGroup();
+                group.setId(rs.getInt(1));
+                group.setName(rs.getString(2));
+                group.setDescription(rs.getString(3));
+                group.setCreateDate(rs.getString(4));
+
+
+                _discussionList.add(group);
+
+            }
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _discussionList;
+    }
+
     public void addDiscussion(DiscussionGroup _discussion){
         try{
             PreparedStatement prepState = conn.prepareStatement("INSERT INTO discussiongroups (group_name, group_desc) values(  ?, ?)");
