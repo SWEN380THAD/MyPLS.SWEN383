@@ -39,4 +39,4 @@ however we see fit.
 # Running application in InteliJ
 run the Application java file in inteliJ.  it should compile and list a bunch of initilizations in teh run window.
 once it is up and running, open a web browser to http://localhost:8080.  it should be teh fully functional website 
-you just created.
+you just created. have fun.
