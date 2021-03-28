@@ -1,5 +1,7 @@
 package com.springexample.spring;
 
+import java.util.ArrayList;
+
 //this class creates a user of MyPLS and gets/sets their information.
 public class DiscussionGroup {
 
@@ -7,6 +9,7 @@ public class DiscussionGroup {
     private String name;
     private String description;
     private String createDate;
+    private ArrayList<User> groupMembers = new ArrayList<>();
 
 
 
@@ -35,5 +38,17 @@ public class DiscussionGroup {
         return createDate;
     }
     public void setCreateDate(String _createDate) {this.createDate = _createDate;}
+
+    public void addGroupMember(User user ) {
+        groupMembers.add(user);
+    }
+
+    public void removeroupMember(User user ) {
+        groupMembers.remove(user);
+    }
+
+    public ArrayList<User> getGroupMembers() {
+        return this.groupMembers;
+    }
 }
 
