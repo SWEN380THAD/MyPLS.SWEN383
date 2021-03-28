@@ -14,7 +14,7 @@ public class Course {
         return courseID;
     }
 
-    public void setId(String  courseid) {//set user password
+    public void setId(String courseid) {//set user password
         this.courseID = courseid;
     }
 
