@@ -103,7 +103,7 @@ This The ADD COURSE FORM
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Courses</h1>
+            <h1 class="m-0">Discussion Groups</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -137,7 +137,7 @@ This The ADD COURSE FORM
                                </div>
                              </div>
                              <div class="form-group row">
-                                   <label  class="col-sm-2 col-form-label">Course Description</label>
+                                   <label  class="col-sm-2 col-form-label">Discussion Description</label>
                                    <div class="col-sm-10">
                                        <textarea class="form-control" rows ="3"  placeholder="Description ..." name ="description"></textarea>
                                    </div>
