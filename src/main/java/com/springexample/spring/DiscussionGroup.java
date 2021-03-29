@@ -10,6 +10,7 @@ public class DiscussionGroup {
     private String description;
     private String createDate;
     private ArrayList<User> groupMembers = new ArrayList<>();
+    private boolean is_public;
 
 
 
@@ -38,6 +39,11 @@ public class DiscussionGroup {
         return createDate;
     }
     public void setCreateDate(String _createDate) {this.createDate = _createDate;}
+
+    public boolean getIsPublic() {//return user type
+        return is_public;
+    }
+    public void setIsPublic(boolean _is_public) {this.is_public = _is_public;}
 
     public void addGroupMember(User user ) {
         groupMembers.add(user);
