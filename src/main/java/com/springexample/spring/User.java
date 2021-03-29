@@ -6,6 +6,7 @@ public class User {
     private String pw;
     private String email;
     private String type;
+    private String user_id;
 
 
 
@@ -30,6 +31,14 @@ public class User {
 
     public void setType(String _type) {//set user type
         this.type = _type;
+    }
+
+    public String getUser_id() {//return user type
+        return user_id;
+    }
+
+    public void setUser_id(String _user_id) {//set user type
+        this.user_id = _user_id;
     }
 }
 

@@ -4,6 +4,7 @@ package com.springexample.spring;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,13 +19,13 @@ public class discussionDashboardController
 
     @GetMapping("/discussionDashboard")
     public String formGet(Model model) {
-        return "DiscussionDashboard";
+        return "discussionDashboard";
     }//returns form page
 
 
 
 
-    @PostMapping("/DiscussionDashboard")
+    @PostMapping("/discussionDashboard")
     public String formPost(DiscussionGroup discussion, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         Application.dl.connect();
@@ -36,6 +37,21 @@ public class discussionDashboardController
         return "redirect:/dashboard";
 
     }
+    @GetMapping("/manageGroupMembers/{group_id}")
+    public String getGroupMembers(@PathVariable("group_id") String _group_id,RedirectAttributes redirectAttributes) {
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("group", Application.dl.getGroup(_group_id));
+        redirectAttributes.addFlashAttribute("allUsers", Application.dl.getAllUsers());
+
+        redirectAttributes.addFlashAttribute(Application.currentUser);
+        Application.dl.close();
+        return "redirect:/groupManagement";
+    }
+
+    @GetMapping("/groupManagement")
+    public String getGroupManagement(Model model) {
+        return "groupManagement";
+    }//returns form page
 
 
 }

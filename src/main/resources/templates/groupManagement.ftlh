@@ -29,7 +29,7 @@ This is a the main Dashboard
         <a href="#" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-              <a href="#" class="nav-link">Available Courses</a>
+              <a href="#" class="nav-link">Add Member</a>
       </li>
        <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Discussion Groups</a>
@@ -135,26 +135,45 @@ This is a the main Dashboard
         <div class="row">
           <div class="col-lg-6">
 
-          <#list groupList as group>
+
 
              <div class="card card-primary card-outline">
                <div class="card-header">
                  <h5 class="m-0">${group.name}</h5>
                </div>
                <div class="card-body">
-                  <h4 class="card-title">-Discussion Description-</h4></br>
-                  <p class="card-text">${group.description}.</p>
-                  <#if user.type == "Admin">
-                     <a href="/openDiscussion/${group.id}" class="btn btn-primary">Open Discussion</a>
-                     <a href="manageGroupMembers/${group.id}" class="btn btn-primary" >Manage Members</a>
+                  <h4 class="card-title">Use Checkbox To Assign User to Group</h4></br>
 
-                  <#else>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
-                  </#if>
+                  <#list allUsers as user>
+                    <#assign s = " <div class=\"form-group\">
+                                      <label>
+                                         ${user.email}
+                                          <input type=\"checkbox\" class=\"flat-red\" >
+                                           </label>
+                                        </div>">
+                    <#list group.groupMembers as groupUser>
+                    <#if groupUser.user_id?? && user.user_id?? >
+                        <#if groupUser.user_id == user.user_id >
+                        <#assign s = " <div class=\"form-group\">
+                             <label>
+                           ${user.email}
+                          <input type=\"checkbox\" class=\"flat-red\" checked>
+                        </label>
+                       </div>">
+                     </#if>
+                     </#if>
+
+
+
+                  </#list>
+                  ${s?no_esc}
+                   </#list>
+
                 </div>
+                <a href="/openDiscussion/${group.id}" class="btn btn-primary">Submit Changes</a>
                </div>
 
-          </#list>
+
 
 
         </div>

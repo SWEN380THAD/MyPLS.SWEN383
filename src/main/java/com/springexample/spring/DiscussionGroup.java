@@ -56,5 +56,6 @@ public class DiscussionGroup {
     public ArrayList<User> getGroupMembers() {
         return this.groupMembers;
     }
+    public void setGroupMembers(ArrayList _groupMembers) {this.groupMembers = _groupMembers;}
 }
 

@@ -132,6 +132,40 @@ public class Datalayer {
         }// end catch
         return user;
     }// end validate user
+
+    public ArrayList<User> getAllUsers(){
+
+        ArrayList<User> allUsers = new ArrayList<>();
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT  * FROM users";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                User user = new User();
+                //System.out.println("PWD given: "+_pwd);
+                //System.out.println("PWD pulled: "+rs.getString(2));
+                user.setUser_id(rs.getString(1));
+                user.setEmail(rs.getString(3));
+                user.setType(rs.getString(4));
+                allUsers.add(user);
+            }
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+        return allUsers;
+    }// end validate user
+
     public boolean validUser(String _user, String _pwd, String _type){
         boolean valid = false;
         String pw = "";
@@ -529,6 +563,61 @@ public class Datalayer {
         }// end of catch
 
     }//end AddDiscussion
+
+
+
+    public DiscussionGroup getGroup(String _group_id){
+        DiscussionGroup group = new DiscussionGroup();
+        ArrayList<User> members = new ArrayList<>();
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT  \n" +
+                    "dg.group_id\n" +
+                    ",dg.group_name\n" +
+                    ",dg.group_desc\n" +
+                    ",dg.created\n" +
+                    ",dg.status\n" +
+                    ",dg.is_public\n" +
+                    ",u.user_id\n" +
+                    ",u.email\n" +
+                    ",u.type\n" +
+                    ",u.status\n" +
+                    "FROM\n" +
+                    "swenproject.discussiongroups dg\n" +
+                    "left join swenproject.group_users gu on dg.group_id = gu.group_id_fk\n" +
+                    "left join swenproject.users u on gu.user_id_fk = u.user_id\n" +
+                    "where dg.group_id = "+_group_id+";";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                User user = new User();
+                user.setUser_id(rs.getString(7));
+                user.setEmail(rs.getString(8));
+                user.setType(rs.getString(9));
+                members.add(user);
+                group.setId(rs.getInt(1));
+                group.setName(rs.getString(2));
+                group.setDescription(rs.getString(3));
+                group.setCreateDate(rs.getString(4));
+                group.setIsPublic(rs.getBoolean(6));
+            }
+            group.setGroupMembers(members);
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+        return group;
+    }// end validate user
 
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";
