@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //this class creates a user of MyPLS and gets/sets their information.
 public class DiscussionGroup {
 
-    private  int group_id;
+    private  String group_id;
     private String name;
     private String description;
     private String createDate;
@@ -14,10 +14,10 @@ public class DiscussionGroup {
 
 
 
-    public int getId() {//return user password
+    public String getId() {//return user password
         return group_id;
     }
-    public void setId(int _id) {//set user password
+    public void setId(String _id) {//set user password
         this.group_id = _id;
     }
 

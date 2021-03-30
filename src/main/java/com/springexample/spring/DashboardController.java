@@ -100,6 +100,8 @@ public class DashboardController
     @GetMapping("/discussionDashboard/{email}")
     public String discussionDashboard(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
         Application.dl.connect();
+        
+        //add if statement to check if the user is an Admin or not.  that way we can limit the user view
         ArrayList<DiscussionGroup> groupList = new ArrayList<>(Application.dl.getAllDiscussions());
         Application.dl.close();
         redirectAttributes.addFlashAttribute("user",Application.currentUser);

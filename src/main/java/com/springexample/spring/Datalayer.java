@@ -519,7 +519,7 @@ public class Datalayer {
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 DiscussionGroup group = new DiscussionGroup();
-                group.setId(rs.getInt(1));
+                group.setId(rs.getString(1));
                 group.setName(rs.getString(2));
                 group.setDescription(rs.getString(3));
                 group.setCreateDate(rs.getString(4));
@@ -599,7 +599,7 @@ public class Datalayer {
                 user.setEmail(rs.getString(8));
                 user.setType(rs.getString(9));
                 members.add(user);
-                group.setId(rs.getInt(1));
+                group.setId(rs.getString(1));
                 group.setName(rs.getString(2));
                 group.setDescription(rs.getString(3));
                 group.setCreateDate(rs.getString(4));
@@ -618,6 +618,55 @@ public class Datalayer {
         }// end catch
         return group;
     }// end validate user
+
+
+    public void removeGroupMember(String _group_ID, String _user_id){
+
+        try {
+
+            PreparedStatement prepState = conn.prepareStatement("delete from swenproject.group_users where user_id_fk = ? and group_id_fk = ?");
+
+            prepState.setString(1, _user_id);
+
+            prepState.setString(2, _group_ID);
+            System.out.println("Statment to be Executed: " + prepState);
+
+             prepState.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+    }
+
+    public void addGroupMember(String _group_ID, String _user_id){
+
+        try {
+
+            PreparedStatement prepState = conn.prepareStatement("insert into swenproject.group_users (user_id_fk, group_id_fk) values (?, ?)");
+
+            prepState.setString(1, _user_id);
+
+            prepState.setString(2, _group_ID);
+            System.out.println("Statment to be Executed: " + prepState);
+
+             prepState.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+    }
+
+
+
+
 
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";

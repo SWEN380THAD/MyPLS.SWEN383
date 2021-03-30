@@ -128,6 +128,8 @@ This is a the main Dashboard
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+   <!-- form start -->
+   <form class="form-horizontal" action="/groupManagement/${groupID}" method="post"  >
 
     <!-- Main content -->
     <div class="content">
@@ -139,16 +141,15 @@ This is a the main Dashboard
 
              <div class="card card-primary card-outline">
                <div class="card-header">
-                 <h5 class="m-0">${group.name}</h5>
+                 <h5 class="m-0" >${group.name}</h5>
                </div>
                <div class="card-body">
                   <h4 class="card-title">Use Checkbox To Assign User to Group</h4></br>
-
-                  <#list allUsers as user>
+                   <#list allUsers as user>
                     <#assign s = " <div class=\"form-group\">
                                       <label>
                                          ${user.email}
-                                          <input type=\"checkbox\" class=\"flat-red\" >
+                                          <input type=\"checkbox\" class=\"flat-red\" name = \"userChecked\" value = ${user.user_id}>
                                            </label>
                                         </div>">
                     <#list group.groupMembers as groupUser>
@@ -157,7 +158,7 @@ This is a the main Dashboard
                         <#assign s = " <div class=\"form-group\">
                              <label>
                            ${user.email}
-                          <input type=\"checkbox\" class=\"flat-red\" checked>
+                          <input type=\"checkbox\" class=\"flat-red\" name = \"userChecked\" value = ${user.user_id} checked>
                         </label>
                        </div>">
                      </#if>
@@ -170,7 +171,7 @@ This is a the main Dashboard
                    </#list>
 
                 </div>
-                <a href="/openDiscussion/${group.id}" class="btn btn-primary">Submit Changes</a>
+               <button type="submit" class="btn btn-info">Submit Changes</button>
                </div>
 
 
@@ -183,7 +184,7 @@ This is a the main Dashboard
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+</form>
         <div class="modal modal-success fade" id="modal-success">
           <div class="modal-dialog">
             <div class="modal-content">
