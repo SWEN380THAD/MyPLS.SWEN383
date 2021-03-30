@@ -26,13 +26,13 @@ This is a the main Dashboard
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="/dashboard" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-              <a href="#" class="nav-link">Available Courses</a>
+              <a href="/dashboard" class="nav-link">Available Courses</a>
       </li>
        <li class="nav-item d-none d-sm-inline-block">
-              <a href="#" class="nav-link">Discussion Groups</a>
+              <a href="/discussionDashboard/${user.email}" class="nav-link">Discussion Groups</a>
             </li>
       <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Feedback</a>
