@@ -32,7 +32,7 @@ CREATE TABLE `courses` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`course_id`,`name`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `courses` (
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
-INSERT INTO `courses` VALUES (1,'This course gives you a very basic introduction to the Java programing language.  we will cover everything from setting up your computer to deploying an application.  this is an update','Access to pc or MAC and internet','No prereqs needed','Introduction to Java'),(9,'this course will cover the basics of creating your first Python application.  from setting up your computer, writing the code and on to implementing your application.','access to computer and internet','java and javascript','Python'),(19,'This course gives you a very basic introduction to the Java Script programing language. we will cover everything from setting up your computer to deploying an application..','access to pc or MAC and internet','Java, HTML','Introduction to Java Script'),(24,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','No prereqs needed ','HTML'),(25,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','Java, HTML and Javascript','Introduction to Scala'),(26,'this is only a test, no big deal.','non','none','New test coiurse'),(27,'this is a test. no big deal','more testing ','testing ','this is a test course'),(28,'test','test','test','test');
+INSERT INTO `courses` VALUES (1,'This course gives you a very basic introduction to the Java programing language.  we will cover everything from setting up your computer to deploying an application.  this is an update','Access to pc or MAC and internet','No prereqs needed','Introduction to Java'),(9,'this course will cover the basics of creating your first Python application.  from setting up your computer, writing the code and on to implementing your application.','access to computer and internet','java and javascript','Python'),(19,'This course gives you a very basic introduction to the Java Script programing language. we will cover everything from setting up your computer to deploying an application..','access to pc or MAC and internet','Java, HTML','Introduction to Java Script'),(24,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','No prereqs needed ','HTML'),(25,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','Java, HTML and Javascript','Introduction to Scala');
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +319,7 @@ CREATE TABLE `user_courses` (
 
 LOCK TABLES `user_courses` WRITE;
 /*!40000 ALTER TABLE `user_courses` DISABLE KEYS */;
-INSERT INTO `user_courses` VALUES (3,1),(6,9),(7,19);
+INSERT INTO `user_courses` VALUES (3,1);
 /*!40000 ALTER TABLE `user_courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,7 +367,7 @@ CREATE TABLE `users` (
   `LName` varchar(45) DEFAULT NULL,
   `FName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -376,7 +376,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','test@rit.com','Admin','0',NULL,NULL,NULL),(4,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','test@rit.edu','Admin','0',NULL,NULL,NULL),(5,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','test@rit.org','Learner','0',NULL,NULL,NULL),(6,'f56d6351aa71cff0debea014d13525e42036187a','demo@localhost','Professor','0',NULL,'Test1','Dave'),(7,'90c8af8db7f253890139189d6e908e86ba25a676','demo@localhost.edu','Professor','0',NULL,'Test2','Harsh'),(8,'cd1e05e2ff79f088be032ffcbc5f1a98e8ab37d3','demo@localhost.rit.edu','Professor','0',NULL,'Test3','Taylor'),(9,'3617c04af9474069a13e95ebdb004aee7f1365a8','demo@localhost.rit.edus','Admin','0',NULL,NULL,NULL),(10,'388ad1c312a488ee9e12998fe097f2258fa8d5ee','test@rit.eduddddd','Learner','0',NULL,NULL,NULL),(19,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','djn9888@g.rit.edu','Learner','0','z4Yq5RwqwLjt9AWo9KaoTosnWwqGDvff6hU2BowsNnT0qqA4uW6605Mze8pxTGdd',NULL,NULL),(20,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','djn98885@g.rit.edu','Learner','0','3yUW1K73c7ENeOgleZSiavHvI3jLcxK69qHAYRAEtywhccwqDE9mK0oZIC6nihty',NULL,NULL);
+INSERT INTO `users` VALUES (3,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','test@rit.com','Admin','0',NULL,NULL,NULL),(4,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','test@rit.edu','Admin','0',NULL,NULL,NULL),(5,'40bd001563085fc35165329ea1ff5c5ecbdbbeef','test@rit.org','Learner','0',NULL,NULL,NULL),(6,'f56d6351aa71cff0debea014d13525e42036187a','demo@localhost','Admin','0',NULL,NULL,NULL),(7,'90c8af8db7f253890139189d6e908e86ba25a676','demo@localhost.edu','Admin','0',NULL,NULL,NULL),(8,'cd1e05e2ff79f088be032ffcbc5f1a98e8ab37d3','demo@localhost.rit.edu','Admin','0',NULL,NULL,NULL),(9,'3617c04af9474069a13e95ebdb004aee7f1365a8','demo@localhost.rit.edus','Admin','0',NULL,NULL,NULL),(10,'388ad1c312a488ee9e12998fe097f2258fa8d5ee','test@rit.eduddddd','Learner','0',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -389,4 +389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-31 12:08:43
+-- Dump completed on 2021-03-30 21:28:11
