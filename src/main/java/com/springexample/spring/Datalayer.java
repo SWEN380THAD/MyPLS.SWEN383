@@ -167,6 +167,43 @@ public class Datalayer {
         return allUsers;
     }// end validate user
 
+
+    public ArrayList<User> getUsersByType(String _type){
+
+        ArrayList<User> allUsers = new ArrayList<>();
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT  * FROM users where type like '"+_type+"'";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                User user = new User();
+                //System.out.println("PWD given: "+_pwd);
+                //System.out.println("PWD pulled: "+rs.getString(2));
+                user.setUser_id(rs.getString(1));
+                user.setEmail(rs.getString(3));
+                user.setType(rs.getString(4));
+                user.setlName(rs.getString(7));
+                user.setfName(rs.getString(8));
+                allUsers.add(user);
+            }
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Issue with finding Uer type of "+_type);
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+        return allUsers;
+    }// end validate user
+
+
     public boolean verifyUser(String _verificationCode){
         boolean valid = false;
 
@@ -291,7 +328,11 @@ public class Datalayer {
                     ",requierments\n" +
                     ",prereqs \n" +
                     ",c.course_id \n" +
-                    "FROM swenproject.courses c";
+                    ",CONCAT(u.FName,\" \",u.LName) fullName\n" +
+                    "\n" +
+                    "FROM swenproject.courses c\n" +
+                    "left join swenproject.user_courses uc on c.course_id = uc.course_id \n" +
+                    "left join swenproject.users u on uc.user_id = u.user_id and u.type = 'Professor'";
 
 
             System.out.println("Statment to be Executed: "+ sql);
@@ -303,6 +344,7 @@ public class Datalayer {
                 course.setRequirements(rs.getString(3));
                 course.setPrerequisites(rs.getString(4));
                 course.setId(rs.getString(5));
+                course.setProfessor(rs.getString(6));
 
                 _cList.add(course);
 

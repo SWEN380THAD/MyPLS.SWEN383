@@ -25,7 +25,7 @@ public class addCourseFormController
 
 
     @PostMapping("/addCourseForm")
-    public String formPost(Course course, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+    public String formPost(Course course, String user_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         Application.dl.connect();
         Application.dl.addCourse(course);

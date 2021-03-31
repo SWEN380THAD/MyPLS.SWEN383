@@ -9,10 +9,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 
-import java.io.UnsupportedEncodingException;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.mail.MessagingException;
 
 
 //this class creates a user of MyPLS and gets/sets their information.
@@ -23,23 +19,29 @@ public class User {
     private String email;
     private String type;
     private String user_id;
+    private String fName;
+    private String lName;
     private String verification_code = RandomString.make(64) ;
 
+    public String getfName() {
+        return fName;
+    }
 
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
 
+    public String getlName() {
+        return lName;
+    }
 
-
-
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
 
     public String getVerification_code() {
         return verification_code;
     }
-
-
-    /*public void setVerification_code(String verification_code) {
-        this.verification_code = RandomString.make(64);;
-    }*/
-
 
 
 

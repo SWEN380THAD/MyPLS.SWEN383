@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.mail.internet.MimeMessage;
 
-@Component
+
 public class UserServices {
 
 
@@ -19,9 +21,7 @@ public class UserServices {
 
 
 
-    public void register(User user, String siteURL) {
 
-    }
 
     public void sendVerificationEmail(User user, String siteURL) {
 

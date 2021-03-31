@@ -76,7 +76,9 @@ public class DashboardController
 
     @GetMapping("/addCourseForm/{email}")
     public String addCourse(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
-
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("professers",(Application.dl.getUsersByType("Professor")));
+        Application.dl.close();
         redirectAttributes.addFlashAttribute(Application.currentUser);
         return "redirect:/addCourseForm";
     } //returns lesson info page

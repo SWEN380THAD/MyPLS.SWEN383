@@ -154,20 +154,18 @@ This The ADD COURSE FORM
                                        <textarea class="form-control" rows ="3"  placeholder="Description ..." name ="description"></textarea>
                                    </div>
                                </div>
-                                 <div class="form-group row">
-                                 <label>Minimal</label>
-                                    <select class="form-control select2" style="width: 100%;">
-                                        <option selected="selected"></option>
-                                         <#list>
-                                         <option>Alaska</option>
-                                         <option>California</option>
-                                         <option>Delaware</option>
-                                         <option>Tennessee</option>
-                                         <option>Texas</option>
-                                         <option>Washington</option>
-                                         <#/list>
-                                  </select>
-                                 </div>
+                               <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Professer</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="user_id">
+                                    <#list professers as prof >
+                                    <option value=${prof.user_id}>${prof.lName}, ${prof.fName}</option>
+                                    </#list>
+
+
+                                    </select>
+                                </div>
+                                </div>
 
                            </div>
                            <!-- /.card-body -->

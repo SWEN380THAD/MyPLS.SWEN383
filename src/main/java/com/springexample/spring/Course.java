@@ -8,7 +8,13 @@ public class Course {
     private String description;
     private String prerequisites;
     private String requirements;
+    private String professor;
 
+    public String getProfessor() { return professor; }
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
+    }
 
     public String getId() {//return user password
         return courseID;
