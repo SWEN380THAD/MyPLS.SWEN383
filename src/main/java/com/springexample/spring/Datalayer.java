@@ -74,6 +74,7 @@ public class Datalayer {
             sqle.printStackTrace();
         }// end of catch
     }//end of testConnection method()
+
     public boolean userNotExist(String _user){
         boolean valid = true;
         try{
@@ -166,13 +167,13 @@ public class Datalayer {
         return allUsers;
     }// end validate user
 
-    public boolean validUser(String _user, String _pwd, String _type){
+    public boolean verifyUser(String _verificationCode){
         boolean valid = false;
-        String pw = "";
+
         try{
             stmt = conn.createStatement();
 
-                sql = "SELECT  "+_type+"ID, Password FROM "+_type+" where email = '"+_user+"'";
+                sql = "SELECT  verificationCode FROM users where verificationCode = '"+_verificationCode+"'";
 
 
             System.out.println("Statment to be Executed: "+ sql);
@@ -180,7 +181,7 @@ public class Datalayer {
             rs.next();
             //System.out.println("PWD given: "+_pwd);
             //System.out.println("PWD pulled: "+rs.getString(2));
-            if(rs.getString(2).equals(_pwd)){
+            if(rs.getString(1).equals(_verificationCode)){
                 valid = true;
 
             }else{
@@ -197,19 +198,21 @@ public class Datalayer {
 
 
     //insert learner to table
-    public int addUser(  String _pw, String _email, String _type){
+    public int addUser(  String _pw, String _email, String _type, String _verificationCode){
+
         int i = 0;
 
         if(userNotExist(_email)) {
             try {
 
-                PreparedStatement prepState = conn.prepareStatement("INSERT INTO users (status,Password, email, type) values(  ?, ?, ?, ?)");
+                PreparedStatement prepState = conn.prepareStatement("INSERT INTO users (status,Password, email, type, verificationCode) values(  ?, ?, ?, ?, ?)");
 
                 prepState.setString(1, "0");
 
                 prepState.setString(2, _pw);
                 prepState.setString(3, _email);
                 prepState.setString(4, _type);
+                prepState.setString(5, _verificationCode);
                 System.out.println("Statment to be Executed: " + prepState);
 
                 i = prepState.executeUpdate();

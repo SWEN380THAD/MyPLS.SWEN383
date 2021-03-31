@@ -1,6 +1,5 @@
 package com.springexample.spring;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,8 @@ public class DashboardController
     public String indexGet( Model model) {
         model.addAttribute("courseList",Application.courseList);
         model.addAttribute("user",Application.currentUser);
-        return "dashboard";
+
+         return "dashboard";
     } //returns index page
 
     @GetMapping("/dashboard/{email}/{course_id}")
