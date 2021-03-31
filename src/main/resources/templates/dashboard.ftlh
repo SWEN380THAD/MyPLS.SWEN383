@@ -149,12 +149,12 @@ This is a the main Dashboard
                   <h4 class="card-title">-Description-</h4></br>
                   <p class="card-text">${courses.description}.</p>
                    <h4 class="card-title">-Professor-</h4></br>
-                  <p class="card-text"><#if courses.professor??>${courses.professor}<#else>Not Assigned</#if></p>
+                  <p class="card-text"><#if courses.professor??>${courses.professor_fName} ${courses.professor_lName}<#else>Not Assigned</#if></p>
                   <#if user.type == "Admin">
                      <a href="dashboard/deleteCourse/${courses.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Delete Course</a>
                      <a href="/updateCourse/${user.email}/${courses.id}" class="btn btn-primary">Update Course</a>
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">View Course Lessons</a>
-                  <#else>
+                                     <#else>
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
                   </#if>
                 </div>

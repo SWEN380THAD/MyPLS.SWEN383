@@ -1,5 +1,6 @@
 package com.springexample.spring;
 
+import org.omg.CORBA.Current;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //controls the functionality of the index.ftlh page.
 //the variables created here can be passed to the index.ftlh page.
@@ -77,7 +79,7 @@ public class DashboardController
     @GetMapping("/addCourseForm/{email}")
     public String addCourse(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
         Application.dl.connect();
-        redirectAttributes.addFlashAttribute("professers",(Application.dl.getUsersByType("Professor")));
+        redirectAttributes.addFlashAttribute("professors",(Application.dl.getUsersByType("Professor")));
         Application.dl.close();
         redirectAttributes.addFlashAttribute(Application.currentUser);
         return "redirect:/addCourseForm";
@@ -93,7 +95,10 @@ public class DashboardController
     @GetMapping("/updateCourse/{email}/{course_id}")
     public String updateCourse(@PathVariable("email") String _email,@PathVariable("course_id") String course_id,RedirectAttributes redirectAttributes) {
         Application.dl.connect();
+        User CurrentProfessor = Application.dl.getCourseProfessor(course_id);
+        redirectAttributes.addFlashAttribute("professors",Application.dl.getUsersByType("Professor"));
         redirectAttributes.addFlashAttribute("course",Application.dl.getCourse(course_id));
+        redirectAttributes.addFlashAttribute("currentProf", CurrentProfessor);
         redirectAttributes.addFlashAttribute(Application.currentUser);
         Application.dl .close();
         return "redirect:/updateCourseForm";

@@ -25,14 +25,22 @@ public class updateCourseFormController
 
 
     @PostMapping("/updateCourseForm")
-    public String updateFormPost(Course course, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+    public String updateFormPost(Course course, String professor_id, String user_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         Application.dl.connect();
         Application.dl.updateCourse(course);
-        ArrayList<Course> courseList = new ArrayList<>(Application.dl.getAllCourses());
+        if(user_id != null && !professor_id.contains("Not") ) {
+            Application.dl.removeProfessorFromCourse(course.getId(), professor_id);
+            Application.dl.addProfessorToCourse(course.getId(), user_id);
+        }else if(professor_id.contains("Not") && user_id != null) {
+            Application.dl.addProfessorToCourse(course.getId(), user_id);
+
+        }
+
+        Application.courseList = new ArrayList<>(Application.dl.getAllCourses());
         Application.dl.close();
         redirectAttributes.addFlashAttribute("user",Application.currentUser);
-        redirectAttributes.addFlashAttribute("courseList",courseList);
+        //redirectAttributes.addFlashAttribute("courseList",courseList);
         return "redirect:/dashboard";
 
     }

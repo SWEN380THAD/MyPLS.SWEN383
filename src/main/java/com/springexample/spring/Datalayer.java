@@ -266,6 +266,50 @@ public class Datalayer {
 
     }// end addProfessor
 
+    public void removeProfessorFromCourse(String _course_id, String _user_id){
+
+        try {
+
+            PreparedStatement prepState = conn.prepareStatement("delete from swenproject.user_courses where user_id = ? and course_id = ?");
+
+            prepState.setString(1, _user_id);
+
+            prepState.setString(2, _course_id);
+            System.out.println("Statment to be Executed: " + prepState);
+
+            prepState.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+    }
+
+    public void addProfessorToCourse(String _course_id, String _user_id){
+
+        try {
+
+            PreparedStatement prepState = conn.prepareStatement("insert into swenproject.user_courses (user_id, course_id) values (?, ?)");
+
+            prepState.setString(1, _user_id);
+
+            prepState.setString(2, _course_id);
+            System.out.println("Statment to be Executed: " + prepState);
+
+            prepState.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+    }
+
     public ArrayList<Course> getUserCourses(String _email){
         ArrayList<Course> _cList = new ArrayList<Course>();
 
@@ -328,11 +372,19 @@ public class Datalayer {
                     ",requierments\n" +
                     ",prereqs \n" +
                     ",c.course_id \n" +
-                    ",CONCAT(u.FName,\" \",u.LName) fullName\n" +
+                    ",min(u.user_id)\n" +
+                    ",min(u.FName)\n" +
+                    ",min(u.LName)\n" +
                     "\n" +
                     "FROM swenproject.courses c\n" +
                     "left join swenproject.user_courses uc on c.course_id = uc.course_id \n" +
-                    "left join swenproject.users u on uc.user_id = u.user_id and u.type = 'Professor'";
+                    "left join swenproject.users u on uc.user_id = u.user_id and u.type = 'Professor'\n" +
+                    "group by\n" +
+                    "name\n" +
+                    ",description\n" +
+                    ",requierments\n" +
+                    ",prereqs \n" +
+                    ",c.course_id ";
 
 
             System.out.println("Statment to be Executed: "+ sql);
@@ -345,6 +397,8 @@ public class Datalayer {
                 course.setPrerequisites(rs.getString(4));
                 course.setId(rs.getString(5));
                 course.setProfessor(rs.getString(6));
+                course.setProfessor_fName(rs.getString(7));
+                course.setProfessor_lName(rs.getString(8));
 
                 _cList.add(course);
 
@@ -377,7 +431,11 @@ public class Datalayer {
                     ",requierments\n" +
                     ",prereqs \n" +
                     ",c.course_id \n" +
-                    "FROM swenproject.courses c\n"+
+                    ",CONCAT(u.FName,\" \",u.LName) fullName\n" +
+                    "\n" +
+                    "FROM swenproject.courses c\n" +
+                    "left join swenproject.user_courses uc on c.course_id = uc.course_id \n" +
+                    "left join swenproject.users u on uc.user_id = u.user_id and u.type = 'Professor'"+
                     "WHERE c.course_id = "+course_id;
 
 
@@ -408,6 +466,54 @@ public class Datalayer {
         }// end catch
 
         return course;
+
+    }
+    public User getCourseProfessor(String course_id){
+        User user = new User();
+
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT DISTINCT \n" +
+                    "u.user_id\n" +
+                    ",u.email\n" +
+                    ",u.LName\n" +
+                    ",u.FName\n" +
+                    "FROM swenproject.courses c\n" +
+                    "left join swenproject.user_courses uc on c.course_id = uc.course_id\n" +
+                    "left join swenproject.users u on uc.user_id = u.user_id and u.type = 'Professor'\n" +
+                    "WHERE c.course_id = "+course_id+"\n"+
+                    "and u.user_id is not null";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            rs.next();
+
+
+            user.setUser_id(rs.getString(1));
+            user.setEmail(rs.getString(2));
+
+            user.setlName(rs.getString(3));
+            user.setfName(rs.getString(4));
+
+
+
+
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return user;
 
     }
     public void deleteCourse(String courseid){
@@ -476,6 +582,11 @@ public class Datalayer {
 
 
     }
+
+
+
+
+
     public ArrayList<Lesson> getLearnerLessons(String _course){
         ArrayList<Lesson> _lessonsList = new ArrayList<Lesson>();
         try{
@@ -523,8 +634,9 @@ public class Datalayer {
     }
 
 
-    public void addCourse(Course _course){
-       try{
+    public String addCourse(Course _course){
+       String cid = "";
+        try{
         PreparedStatement prepState = conn.prepareStatement("INSERT INTO courses (description,requierments, prereqs, name) values(  ?, ?, ?, ?)");
 
 
@@ -536,12 +648,27 @@ public class Datalayer {
         System.out.println("Statment to be Executed: " + prepState);
         prepState.executeUpdate();
 
+           stmt = conn.createStatement();
+
+           sql =   "  SELECT\n" +
+                   " Max(course_id)\n" +
+                   "FROM courses";
+
+
+
+           System.out.println("Statment to be Executed: "+ sql);
+           rs = stmt.executeQuery(sql);
+           rs.next();
+
+
+           cid = rs.getString(1);
+
        } catch (SQLException sqle) {
            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
            sqle.printStackTrace();
        }// end of catch
-
+      return cid;
     }
 
     public ArrayList<DiscussionGroup> getAllDiscussions(){

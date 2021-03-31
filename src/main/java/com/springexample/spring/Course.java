@@ -8,12 +8,32 @@ public class Course {
     private String description;
     private String prerequisites;
     private String requirements;
-    private String professor;
+    private String professor_id;
+    private String professor_fName;
+    private String professor_lName;
 
-    public String getProfessor() { return professor; }
+    public String getProfessor_fName() {
+        return professor_fName;
+    }
+
+    public void setProfessor_fName(String professor_fName) {
+        this.professor_fName = professor_fName;
+    }
+
+    public String getProfessor_lName() {
+        return professor_lName;
+    }
+
+    public void setProfessor_lName(String professor_lName) {
+        this.professor_lName = professor_lName;
+    }
+
+
+
+    public String getProfessor() { return professor_id; }
 
     public void setProfessor(String professor) {
-        this.professor = professor;
+        this.professor_id = professor;
     }
 
     public String getId() {//return user password

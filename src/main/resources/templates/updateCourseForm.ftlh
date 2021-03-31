@@ -15,6 +15,7 @@ This The ADD COURSE FORM
   <!-- Theme style -->
   <link rel="stylesheet" href="/css/adminlte.min.css">
 </head>
+
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
@@ -160,6 +161,24 @@ This The ADD COURSE FORM
                                        <textarea class="form-control" rows ="3"   name ="description">${course.description}</textarea>
                                    </div>
                                </div>
+                               <div class="form-group row">
+                                 <label  class="col-sm-2 col-form-label">Current Professor: </label>
+                                  <div class="col-sm-10">
+                                    <input type = "text" class="form-control"   value =" <#if currentProf.user_id??>${currentProf.user_id}<#else>Not Assigned </#if>" name ="professor_id">
+                                  </div>
+
+                                 </div>
+                                 <div class="form-group row">
+                                   <label class="col-sm-2 col-form-label">Change Professor</label>
+                                   <div class="col-sm-10">
+                                       <select class="form-control" name="user_id">
+                                        <option> </option>
+                                        <#list professors as prof >
+                                         <option <#if prof.user_id??>value=${prof.user_id}>${prof.user_id}        ${prof.lName}, ${prof.fName}<#else> </#if></option>
+                                         </#list>
+                                        </select>
+                                   </div>
+                                 </div>
 
                            </div>
                            <!-- /.card-body -->

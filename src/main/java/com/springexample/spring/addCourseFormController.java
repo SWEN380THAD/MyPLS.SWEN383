@@ -28,11 +28,12 @@ public class addCourseFormController
     public String formPost(Course course, String user_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         Application.dl.connect();
-        Application.dl.addCourse(course);
-        ArrayList<Course> courseList = new ArrayList<>(Application.dl.getAllCourses());
+       String course_id = Application.dl.addCourse(course);
+        Application.dl.addProfessorToCourse(course_id,user_id);
+        Application.courseList =Application.dl.getAllCourses();
         Application.dl.close();
         redirectAttributes.addFlashAttribute("user",Application.currentUser);
-        redirectAttributes.addFlashAttribute("courseList",courseList);
+       // redirectAttributes.addFlashAttribute("courseList",courseList);
         return "redirect:/dashboard";
 
     }
