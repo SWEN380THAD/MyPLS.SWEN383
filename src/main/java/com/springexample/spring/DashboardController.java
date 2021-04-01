@@ -118,5 +118,15 @@ public class DashboardController
     } //returns lesson info page
 
 
+    @GetMapping("/feedbackDashboard/{email}")
+    public String feedbackDashboard(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("feedbackList", Application.dl.getAllFeedback());
+        redirectAttributes.addFlashAttribute(Application.currentUser);
+        Application.dl.close();
+        return "redirect:/feedbackDashboard";
+    } //returns lesson info page
+
+
 
 }

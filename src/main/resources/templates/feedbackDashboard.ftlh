@@ -26,7 +26,7 @@ This is a the main Dashboard
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="/dashboard" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
               <a href="#" class="nav-link">Available Courses</a>
@@ -35,7 +35,7 @@ This is a the main Dashboard
               <a href="/discussionDashboard/${user.email}" class="nav-link">Discussion Groups</a>
             </li>
       <li class="nav-item d-none d-sm-inline-block">
-              <a href="/feedbackDashboard/${user.email}" class="nav-link">Feedback</a>
+              <a href="#" class="nav-link">Feedback</a>
             </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -116,7 +116,7 @@ This is a the main Dashboard
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Courses</h1>
+            <h1 class="m-0">Feedback</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -135,30 +135,22 @@ This is a the main Dashboard
         <div class="row">
           <div class="col-lg-6">
 
-          <#list courseList as courses>
+          <#list feedbackList as feedback>
 
-             <div class="card card-primary card-outline">
+             <div class="card card-info">
                <div class="card-header">
-                 <h5 class="m-0">${courses.name}</h5>
+                 <h5 class="m-0">Feedback:  ${feedback.name}</h5>
                </div>
-               <div class="card-body">
-                 <h4 class="card-title">-Prerequisites-</h4></br>
-                  <p class="card-text">${courses.prerequisites}.</p>
-                  <h4 class="card-title">-Requirements-</h4></br>
-                  <p class="card-text">${courses.requirements}.</p>
-                  <h4 class="card-title">-Description-</h4></br>
-                  <p class="card-text">${courses.description}.</p>
-                   <h4 class="card-title">-Professor-</h4></br>
-                  <p class="card-text"><#if courses.professor??>${courses.professor_fName} ${courses.professor_lName}<#else>Not Assigned</#if></p>
-                  <#if user.type == "Admin">
-                     <a href="dashboard/deleteCourse/${courses.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Delete Course</a>
-                     <a href="/updateCourse/${user.email}/${courses.id}" class="btn btn-primary">Update Course</a>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">View Course Lessons</a>
-                                     <#else>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
-                  </#if>
+
+                 <h4 class="card-title"> </h4><br>
+                 <p class="card-text"> </p>
+                 <h4 class="card-title"><b>Rating:</b> ${feedback.rating}</h4></br>
+                  <p class="card-text"></p>
+                  <h4 class="card-title"><b>Comments:</b> ${feedback.description} </h4></br>
+                  <p class="card-text"></p>
+
                 </div>
-               </div>
+
 
           </#list>
 
@@ -171,26 +163,7 @@ This is a the main Dashboard
   </div>
   <!-- /.content-wrapper -->
 
-        <div class="modal modal-success fade" id="modal-success">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Success Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>course has been deleted</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
 
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

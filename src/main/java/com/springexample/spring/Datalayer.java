@@ -836,7 +836,70 @@ public class Datalayer {
         }// end of catch
     }
 
+    public ArrayList<Feedback> getAllFeedback(){
 
+        ArrayList<Feedback> _feedbackList = new ArrayList<Feedback>();
+        try{
+            stmt = conn.createStatement();
+
+            sql =   " SELECT f.feedback\n" +
+                    ",f.rating\n" +
+                    ",f.type\n" +
+                    ",c.name\n" +
+                    "FROM swenproject.feedback f\n" +
+                    "  join swenproject.courses c on f.feedback_key = c.course_id and f.type = 'course';";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                Feedback feedback = new Feedback();
+                feedback.setDescription(rs.getString(1));
+                feedback.setRating(rs.getString(2));
+                feedback.setType(rs.getString(3));
+                feedback.setName(rs.getString(4));
+
+
+                _feedbackList.add(feedback);
+
+            }
+
+
+            sql =   " SELECT f.feedback\n" +
+                    ",f.rating\n" +
+                    ",f.type\n" +
+                    ",l.name\n" +
+                    "FROM swenproject.feedback f\n" +
+                    "  join swenproject.lessons l on f.feedback_key = l.lesson_id and f.type = 'lesson';";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                Feedback feedback = new Feedback();
+                feedback.setDescription(rs.getString(1));
+                feedback.setRating(rs.getString(2));
+                feedback.setType(rs.getString(3));
+                feedback.setName(rs.getString(4));
+
+
+                _feedbackList.add(feedback);
+
+            }
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _feedbackList;
+    }
 
 
 
