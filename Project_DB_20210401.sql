@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS `swenproject`;
 CREATE DATABASE  IF NOT EXISTS `swenproject` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `swenproject`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
@@ -33,7 +32,7 @@ CREATE TABLE `courses` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`course_id`,`name`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +41,7 @@ CREATE TABLE `courses` (
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
-INSERT INTO `courses` VALUES (1,'This course gives you a very basic introduction to the Java programing language.  we will cover everything from setting up your computer to deploying an application.  this is an update','Access to pc or MAC and internet','No prereqs needed','Introduction to Java'),(9,'this course will cover the basics of creating your first Python application.  from setting up your computer, writing the code and on to implementing your application.','access to computer and internet','java and javascript','Python'),(19,'This course gives you a very basic introduction to the Java Script programing language. we will cover everything from setting up your computer to deploying an application..','access to pc or MAC and internet','Java, HTML','Introduction to Java Script'),(24,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','No prereqs needed ','HTML'),(25,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','Java, HTML and Javascript','Introduction to Scala'),(30,'can we pelase test this more and more and more','this is jsut a test','some other tests','more testing '),(32,'this is only a test, stay calm.','101 testing','testing 123','testertest');
+INSERT INTO `courses` VALUES (1,'This course gives you a very basic introduction to the Java programing language.  we will cover everything from setting up your computer to deploying an application.  this is an update','Access to pc or MAC and internet','No prereqs needed','Introduction to Java'),(9,'this course will cover the basics of creating your first Python application.  from setting up your computer, writing the code and on to implementing your application.','access to computer and internet','java and javascript','Python'),(19,'This course gives you a very basic introduction to the Java Script programing language. we will cover everything from setting up your computer to deploying an application..','access to pc or MAC and internet','Java, HTML','Introduction to Java Script'),(24,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','No prereqs needed ','HTML'),(25,'This course gives you a very basic introduction to the Java programing language. we will cover everything from setting up your computer to deploying an application..','Access to pc or MAC and internet','Java, HTML and Javascript','Introduction to Scala'),(30,'can we pelase test this more and more and more','this is jsut a test','some other tests','more testing '),(33,'this is only a test','this is fun','test test','more testing for testing');
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,15 +81,16 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `feedback` (
-  `feedback_id` int NOT NULL DEFAULT '0',
+  `feedback_id` int NOT NULL AUTO_INCREMENT,
   `feedback` varchar(1000) NOT NULL,
   `rating` int DEFAULT NULL,
   `feedback_key` int NOT NULL,
   `user_id` int NOT NULL,
+  `type` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`feedback_id`),
   KEY `fk_feedback_userid_idx` (`user_id`),
-  CONSTRAINT `fk_feedback_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_feedback_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +99,7 @@ CREATE TABLE `feedback` (
 
 LOCK TABLES `feedback` WRITE;
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+INSERT INTO `feedback` VALUES (4,'this coiurse was great',9,1,3,'course'),(5,'this lesson was great',7,1,4,'lesson');
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +127,7 @@ CREATE TABLE `group_users` (
 
 LOCK TABLES `group_users` WRITE;
 /*!40000 ALTER TABLE `group_users` DISABLE KEYS */;
-INSERT INTO `group_users` VALUES (1,3,'1'),(2,3,'1'),(1,4,'1'),(2,4,'1'),(2,7,'1'),(1,8,'1'),(1,9,'1'),(1,10,'1'),(2,10,'1');
+INSERT INTO `group_users` VALUES (1,3,'1'),(2,3,'1'),(1,4,'1'),(1,5,'1'),(1,6,'1'),(1,7,'1'),(2,7,'1'),(1,10,'1'),(2,10,'1');
 /*!40000 ALTER TABLE `group_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +321,7 @@ CREATE TABLE `user_courses` (
 
 LOCK TABLES `user_courses` WRITE;
 /*!40000 ALTER TABLE `user_courses` DISABLE KEYS */;
-INSERT INTO `user_courses` VALUES (3,1),(6,1),(6,9),(7,19),(8,24),(8,25),(6,32);
+INSERT INTO `user_courses` VALUES (3,1),(7,1),(6,9),(7,19),(8,24),(8,25),(8,33);
 /*!40000 ALTER TABLE `user_courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,4 +391,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-31 17:28:18
+-- Dump completed on 2021-04-01  8:10:49
