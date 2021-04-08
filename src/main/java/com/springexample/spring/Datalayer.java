@@ -204,7 +204,7 @@ public class Datalayer {
     }// end validate user
 
 
-    public boolean verifyUser(String _verificationCode){
+    public void verifyUser(String _verificationCode){
         boolean valid = false;
 
         try{
@@ -221,16 +221,25 @@ public class Datalayer {
             if(rs.getString(1).equals(_verificationCode)){
                 valid = true;
 
+                PreparedStatement prepState = conn.prepareStatement("update users set status =  ?");
+
+                prepState.setString(1, "0");
+                System.out.println("Statment to be Executed: " + prepState);
+
+               prepState.executeUpdate();
+
             }else{
                 JOptionPane.showMessageDialog(null, "Username or Password do not match!");
             }
+
+
 
         }catch(SQLException sqle){
             JOptionPane.showMessageDialog(null, "Username or Password do not match!");
             System.out.println("ERROR MESSAGE -> "+sqle);
             System.out.println("ERROR SQLException in getResultSet()");
         }// end catch
-        return valid;
+        //return valid;
     }// end validate user
 
 
@@ -244,7 +253,7 @@ public class Datalayer {
 
                 PreparedStatement prepState = conn.prepareStatement("INSERT INTO users (status,Password, email, type, verificationCode) values(  ?, ?, ?, ?, ?)");
 
-                prepState.setString(1, "0");
+                prepState.setString(1, "1");
 
                 prepState.setString(2, _pw);
                 prepState.setString(3, _email);
