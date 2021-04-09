@@ -41,6 +41,17 @@ This is a the main Dashboard
         <a href="#" class="nav-link">Contact</a>
       </li>
     </ul>
+    <!-- SEARCH FORM -->
+            <form action ="search" class="form-inline ml-3">
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" name ="filter" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                   <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search">Search</i>
+                   </button>
+                </div>
+              </div>
+            </form>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -144,12 +155,11 @@ This is a the main Dashboard
                <div class="card-body">
                   <h4 class="card-title">-Discussion Description-</h4></br>
                   <p class="card-text">${group.description}.</p>
+                  <a href="/openDiscussion/${group.id}" class="btn btn-primary">Open Discussion</a>
                   <#if user.type == "Admin">
-                     <a href="/openDiscussion/${group.id}" class="btn btn-primary">Open Discussion</a>
                      <a href="manageGroupMembers/${group.id}" class="btn btn-primary" >Manage Members</a>
-
                   <#else>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
+                     <a href="addGroupMembers/${user.email}/${group.id}" class="btn btn-primary">Join Group</a>
                   </#if>
                 </div>
                </div>

@@ -680,7 +680,7 @@ public class Datalayer {
       return cid;
     }
 
-    public ArrayList<DiscussionGroup> getAllDiscussions(){
+    public ArrayList<DiscussionGroup> getAllDiscussions(String _filter){
 
         ArrayList<DiscussionGroup> _discussionList = new ArrayList<DiscussionGroup>();
         try{
@@ -693,6 +693,8 @@ public class Datalayer {
                     ",g.created\n" +
 
                     "    FROM swenproject.discussiongroups g\n" +
+                    "    WHERE g.group_name like '%"+_filter+"%'\n"+
+                    "    or g.group_desc like '%"+_filter+"%'\n"+
                     "    order by g.created;";
 
 

@@ -58,10 +58,35 @@ public class discussionDashboardController
         return "redirect:/groupManagement";
     }
 
+    @GetMapping("/addGroupMembers/{group_id}/{user_id}")
+    public String addToGroup(@PathVariable("group_id") String _group_id, @PathVariable("user_id") String _user_id, RedirectAttributes redirectAttributes) {
+        Application.dl.connect();
+        ArrayList<DiscussionGroup> groupList = new ArrayList<>(Application.dl.getAllDiscussions("%"));
+        redirectAttributes.addFlashAttribute("group", Application.dl.getGroup(_group_id));
+        Application.dl.addGroupMember(_group_id,_user_id);
+        redirectAttributes.addFlashAttribute("user",Application.currentUser);
+        redirectAttributes.addFlashAttribute("groupList",groupList);
+        Application.dl .close();
+        return "redirect:/discussionDashboard";
+    }
+
     @GetMapping("/groupManagement")
     public String getGroupManagement(Model model) {
         return "groupManagement";
     }//returns form page
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String getsearch(@RequestParam("filter") String _filter, RedirectAttributes redirectAttributes ) {
 
+       if(_filter == ""){_filter = "%";}
+        Application.dl.connect();
+
+        //add if statement to check if the user is an Admin or not.  that way we can limit the user view
+        ArrayList<DiscussionGroup> groupList = new ArrayList<>(Application.dl.getAllDiscussions(_filter));
+        Application.dl.close();
+        redirectAttributes.addFlashAttribute("user",Application.currentUser);
+        redirectAttributes.addFlashAttribute("groupList",groupList);
+        Application.dl .close();
+        return "redirect:/discussionDashboard";
+    }//returns form page
 }
