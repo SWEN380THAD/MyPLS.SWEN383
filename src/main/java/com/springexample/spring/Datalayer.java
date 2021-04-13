@@ -912,7 +912,37 @@ public class Datalayer {
         return _feedbackList;
     }
 
+    //insert learner to table
+    public void addQuiz(  Quiz _quiz){
 
+
+
+            try {
+
+               PreparedStatement prepState = conn.prepareStatement("INSERT INTO quizzes (status,Password, email, type, verificationCode) values(  ?, ?, ?, ?, ?)");
+/*
+                prepState.setString(1, "1");
+
+                prepState.setString(2, _pw);
+                prepState.setString(3, _email);
+                prepState.setString(4, _type);
+                prepState.setString(5, _verificationCode);
+                System.out.println("Statment to be Executed: " + prepState);
+
+                i = prepState.executeUpdate();
+                JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+*/
+            } catch (SQLException sqle) {
+                System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+                System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+                sqle.printStackTrace();
+            }// end of catch
+
+
+
+
+    }// end addProfessor
 
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";

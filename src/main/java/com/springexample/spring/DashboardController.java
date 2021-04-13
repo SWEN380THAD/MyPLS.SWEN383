@@ -127,6 +127,14 @@ public class DashboardController
         return "redirect:/feedbackDashboard";
     } //returns lesson info page
 
+    @GetMapping("/addQuizForm/{email}")
+    public String addQuizForm(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
+        Quiz quiz = new Quiz();
+        redirectAttributes.addFlashAttribute("quiz", quiz);
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        return "redirect:/addQuizForm";
+    } //returns lesson info page
+
 
 
 }

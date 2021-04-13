@@ -1,11 +1,14 @@
 package com.springexample.spring;
 
+import java.util.ArrayList;
+
 //this class creates a user of MyPLS and gets/sets their information.
 public class Lesson {
 
     private int id;
     private String name;
     private String minimumScore;
+
 
 
 

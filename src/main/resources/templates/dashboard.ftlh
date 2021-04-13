@@ -75,11 +75,12 @@ This is a the main Dashboard
         </div>
       </div>
       <!-- Sidebar Menu -->
-      <#if user.type == "Admin">
+
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+                <#if user.type == "Admin">
           <li class="nav-item menu-open">
             <a href="/addCourseForm/${user.email}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -90,6 +91,8 @@ This is a the main Dashboard
             </a>
 
           </li>
+
+
           <li class="nav-item menu-open">
              <a href="/addDiscussionForm/${user.email}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -100,10 +103,21 @@ This is a the main Dashboard
              </a>
 
           </li>
+           <#elseif user.type == "Professor">
+          <li class="nav-item menu-open">
+            <a href="/addQuizForm/${user.email}" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Create Quiz
+                 <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
 
+           </li>
+</#if>
         </ul>
       </nav>
-      </#if>
+
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -154,8 +168,10 @@ This is a the main Dashboard
                      <a href="dashboard/deleteCourse/${courses.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Delete Course</a>
                      <a href="/updateCourse/${user.email}/${courses.id}" class="btn btn-primary">Update Course</a>
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">View Course Lessons</a>
-                                     <#else>
+                  <#elseif user.type == "Professor">
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
+                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Add Quiz</a>
+                  <#else>
                   </#if>
                 </div>
                </div>
