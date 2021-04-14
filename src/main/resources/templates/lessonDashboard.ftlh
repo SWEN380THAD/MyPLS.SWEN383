@@ -75,6 +75,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- /.sidebar-menu -->
+
+      <nav class="mt-2">
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                      <#if user.type == "Professor">
+
+
+                <li class="nav-item menu-open">
+                   <a href="/addLessonForm/${user.email}" class="nav-link active">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                     <p>
+                       Add Lesson
+                       <i class="right fas fa-angle-left"></i>
+                     </p>
+                   </a>
+
+                </li>
+
+
+                 </li>
+
+      </#if>
+              </ul>
+            </nav>
+
     </div>
     <!-- /.sidebar -->
   </aside>
@@ -115,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <h6 class="card-title"></h6>
 
                   <p class="card-text">${lesson.name}.</p>
-
+                   <a href="#" class="btn btn-primary">Add Quiz</a>
                 </div>
                </div>
 

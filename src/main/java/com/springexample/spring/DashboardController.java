@@ -73,6 +73,9 @@ public class DashboardController
 
     @GetMapping("/lessonDashboard")
     public String lessonGet(Model model ) {
+
+        model.addAttribute("user", Application.currentUser);
+
         return "lessonDashboard";
     } //returns lesson info page
 
