@@ -596,7 +596,7 @@ public class Datalayer {
 
 
 
-    public ArrayList<Lesson> getLearnerLessons(String _course){
+    public ArrayList<Lesson> getLearnerLessons(String _course, String _email){
         ArrayList<Lesson> _lessonsList = new ArrayList<Lesson>();
         try{
             stmt = conn.createStatement();
@@ -611,6 +611,7 @@ public class Datalayer {
                     "    join swenproject.courses c on uc.course_id = c.course_id\n" +
                     "    join swenproject.lessons l on c.course_id = l.course_id\n" +
                     "    where l.course_id ='"+_course+"'\n" +
+                    "    AND u.email ='"+_email+"'\n" +
                     "    order by l.order;";
 
 

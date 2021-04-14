@@ -34,7 +34,7 @@ public class DashboardController
         Application.dl.connect();
         redirectAttributes.addFlashAttribute("course", course_id);
         redirectAttributes.addFlashAttribute("email", _email);
-        redirectAttributes.addFlashAttribute("lessonList",Application.dl.getLearnerLessons(course_id));
+        redirectAttributes.addFlashAttribute("lessonList",Application.dl.getLearnerLessons(course_id, _email));
         Application.dl.close();
         return "redirect:/lessonDashboard";
     } //returns lesson info page
