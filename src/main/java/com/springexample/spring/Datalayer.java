@@ -30,8 +30,8 @@ public class Datalayer {
     public boolean connect() {
 
         String URL = "jdbc:mysql://localhost/";
-        String USER = "student";
-        String PASS = "student";
+        String USER = "test";
+        String PASS = "test";
         conn = null;
 
         try {

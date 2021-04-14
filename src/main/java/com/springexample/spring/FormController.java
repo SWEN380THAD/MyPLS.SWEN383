@@ -1,19 +1,11 @@
 package com.springexample.spring;
 
 
-import com.icegreen.greenmail.util.GreenMail;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.*;
 
 //controls the functionality of the form.ftlh page.
 //the variables created here can be passed to the form.ftlh page.

@@ -1,14 +1,7 @@
 package com.springexample.spring;
 
-import com.sun.xml.internal.ws.developer.Serialization;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-
 
 
 //this class creates a user of MyPLS and gets/sets their information.
