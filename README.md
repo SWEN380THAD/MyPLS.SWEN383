@@ -19,7 +19,7 @@ The following guides illustrate how to use some features concretely:
 
 
 # Basic Structure
-all coding takes place in the src folder.  there are two basic catagories within the src folder
+all the coding takes place in the src folder.  there are two basic catagories within the src folder
 Java and Recources.  The Java folder contains all of the Java code such as the "Handlers" 
 or "Controllers". The resources folder contains  all of the FTLH(version of FTL) files, CSS, JS, 
 and any Media related to the web page.  each web page is held in the "templates" folder within the 
