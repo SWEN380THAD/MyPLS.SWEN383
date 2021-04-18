@@ -131,7 +131,7 @@ This is a the main Dashboard
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Courses</h1>
+            <h1 class="m-0">Add Quiz</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -150,30 +150,16 @@ This is a the main Dashboard
         <div class="row">
           <div class="col-lg-6">
 
-          <#list courseList as courses>
+          <#list quizzes as quiz>
 
              <div class="card card-primary card-outline">
                <div class="card-header">
-                 <h5 class="m-0">${courses.name}</h5>
+                 <h5 class="m-0">${quiz.name}</h5>
                </div>
                <div class="card-body">
-                 <h4 class="card-title">-Prerequisites-</h4></br>
-                  <p class="card-text">${courses.prerequisites}.</p>
-                  <h4 class="card-title">-Requirements-</h4></br>
-                  <p class="card-text">${courses.requirements}.</p>
-                  <h4 class="card-title">-Description-</h4></br>
-                  <p class="card-text">${courses.description}.</p>
-                   <h4 class="card-title">-Professor-</h4></br>
-                  <p class="card-text"><#if courses.professor??>${courses.professor_fName} ${courses.professor_lName}<#else>Not Assigned</#if></p>
-                  <#if user.type == "Admin">
-                     <a href="dashboard/deleteCourse/${courses.id}" class="btn btn-primary" data-toggle="modal" data-target="#modal-success">Delete Course</a>
-                     <a href="/updateCourse/${user.email}/${courses.id}" class="btn btn-primary">Update Course</a>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">View Course Lessons</a>
-                  <#elseif user.type == "Professor">
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
-                     <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Manage Quizzes</a>
-                  <#else>
-                  </#if>
+
+                     <a href="addQuizDashboard/${course}/${lesson_id}/${quiz.quizID}" class="btn btn-primary">Assign Quiz</a>
+
                 </div>
                </div>
 

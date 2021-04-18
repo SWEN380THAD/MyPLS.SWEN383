@@ -36,7 +36,7 @@ public class QuizQuestion {
         this.question = _question;
     }
 
-    public ArrayList getAnswers() {//return user email
+    public ArrayList<QuizAnswer> getAnswers() {//return user email
         return answers;
     }
 

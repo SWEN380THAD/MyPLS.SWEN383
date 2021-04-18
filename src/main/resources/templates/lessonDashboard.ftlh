@@ -69,7 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         </div>
         <div class="info">
-          <a href="#" class="d-block">${email}</a>
+          <a href="#" class="d-block">${user.email}</a>
         </div>
       </div>
 
@@ -112,7 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> ${email} Lessons</h1>
+            <h1 class="m-0"> ${user.email} Lessons</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -141,7 +141,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <h6 class="card-title"></h6>
 
                   <p class="card-text">${lesson.name}.</p>
-                   <a href="#" class="btn btn-primary">Add Quiz</a>
+                  <#if lesson.quiz_id??>
+                  <a href="/removeQuiz/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
+
+                  <#else>
+                  <a href="/addQuiz/${course}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
+
+                  </#if>
                 </div>
                </div>
 

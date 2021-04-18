@@ -55,23 +55,9 @@ public class addQuizFormController
             quiz.setMinimumScore(minimumScore.get());
 
         }
-        QuizQuestion question1 = new QuizQuestion();
-        question1.setQuestion(question);
+        addQuizQuestion(answers,correctAnswer,question);
 
-         QuizAnswer cAnswer = new QuizAnswer();
-         cAnswer.setIsCorrect(true);
-         cAnswer.setAnswer(correctAnswer);
 
-         question1.setAnswers(cAnswer);
-
-      for(String wa: answers){
-          QuizAnswer wAnswer = new QuizAnswer();
-          wAnswer.setIsCorrect(false);
-          wAnswer.setAnswer(wa);
-          question1.setAnswers(wAnswer);
-      }
-
-      quiz.setQuestions(question1);
         //  Application.dl.connect();
       //  redirectAttributes.addFlashAttribute("group", Application.dl.getGroup(_group_id));
        // redirectAttributes.addFlashAttribute("groupID", _group_id);
@@ -82,17 +68,45 @@ public class addQuizFormController
         return "/addQuizForm";
     }
 
-   /* @GetMapping("/addGroupMembers/{group_id}/{user_id}")
-    public String addToGroup(@PathVariable("group_id") String _group_id, @PathVariable("user_id") String _user_id, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/addQuizForm", method = RequestMethod.POST, params = "submit")
+    public String saveQuiz( @RequestParam("answer") List<String> answers,  @RequestParam("correctAnswer") String correctAnswer, String question) {
+
+        addQuizQuestion(answers,correctAnswer,question);
+
         Application.dl.connect();
-        ArrayList<DiscussionGroup> groupList = new ArrayList<>(Application.dl.getAllDiscussions("%"));
-        redirectAttributes.addFlashAttribute("group", Application.dl.getGroup(_group_id));
-        Application.dl.addGroupMember(_group_id,_user_id);
-        redirectAttributes.addFlashAttribute("user",Application.currentUser);
-        redirectAttributes.addFlashAttribute("groupList",groupList);
+
+        Application.dl.addQuiz(quiz);
         Application.dl .close();
-        return "redirect:/discussionDashboard";
+        quiz = new Quiz();
+        return "redirect:/dashboard";
     }
+
+
+    public void addQuizQuestion(List<String> answers,String correctAnswer, String question){
+
+        QuizQuestion question1 = new QuizQuestion();
+        question1.setQuestion(question);
+
+        QuizAnswer cAnswer = new QuizAnswer();
+        cAnswer.setIsCorrect(true);
+        cAnswer.setAnswer(correctAnswer);
+
+        question1.setAnswers(cAnswer);
+
+        for(String wa: answers){
+            QuizAnswer wAnswer = new QuizAnswer();
+            wAnswer.setIsCorrect(false);
+            wAnswer.setAnswer(wa);
+            question1.setAnswers(wAnswer);
+        }
+
+        quiz.setQuestions(question1);
+
+    }
+
+
+    /*
+
 
     @GetMapping("/groupManagement")
     public String getGroupManagement(Model model) {

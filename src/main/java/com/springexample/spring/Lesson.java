@@ -8,6 +8,7 @@ public class Lesson {
     private int id;
     private String name;
     private String minimumScore;
+    private String quiz_id;
 
 
 
@@ -38,5 +39,12 @@ public class Lesson {
     }
 
 
+    public String getQuiz_id() {
+        return quiz_id;
+    }
+
+    public void setQuiz_id(String quiz_id) {
+        this.quiz_id = quiz_id;
+    }
 }
 

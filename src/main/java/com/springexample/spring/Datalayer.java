@@ -916,24 +916,48 @@ public class Datalayer {
     //insert learner to table
     public void addQuiz(  Quiz _quiz){
 
-
+            int i = 0;
 
             try {
+                stmt = conn.createStatement();
+               sql = "INSERT INTO quizzes (quiz_name, lesson_id) values('"+_quiz.getName()+"', 0)";
 
-               PreparedStatement prepState = conn.prepareStatement("INSERT INTO quizzes (status,Password, email, type, verificationCode) values(  ?, ?, ?, ?, ?)");
-/*
-                prepState.setString(1, "1");
 
-                prepState.setString(2, _pw);
-                prepState.setString(3, _email);
-                prepState.setString(4, _type);
-                prepState.setString(5, _verificationCode);
-                System.out.println("Statment to be Executed: " + prepState);
+                System.out.println("Statment to be Executed: " + sql);
+                stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+                System.out.println("return key: " + i);
+                ResultSet rs=stmt.getGeneratedKeys();
+                int quizid = 0;
+                if(rs.next()){
+                    quizid =rs.getInt(1);
+                }
 
-                i = prepState.executeUpdate();
-                JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+                for(QuizQuestion _question: _quiz.getQuestions()){
+                    sql = "INSERT INTO quiz_questions (question, quiz_id) values('" + _question.getQuestion() + "'," + quizid + ")";
+                    System.out.println("Statment to be Executed: " + sql);
+                    stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-*/
+                    ResultSet rs1=stmt.getGeneratedKeys();
+                    int questionID = 0;
+                    if(rs1.next()){
+                        questionID=rs1.getInt(1);
+                    }
+                    for(QuizAnswer _answers: _question.getAnswers()){
+
+                        int myBool = _answers.getIsCorrect()?1:0;
+                        sql = "INSERT INTO quiz_answers (question_id, answer, correct) values(" + questionID + ",'" + _answers.getAnswer() + "'," + myBool + ")";
+                        System.out.println("Statment to be Executed: " + sql);
+                        stmt.executeUpdate(sql);
+                    }
+
+                }
+
+
+
+
+
+
+
             } catch (SQLException sqle) {
                 System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
                 System.out.println("ERROR MESSAGE-> " + sqle + "\n");
@@ -942,6 +966,115 @@ public class Datalayer {
 
 
 
+
+    }// end addProfessor
+
+    public void addLessonToQuiz(String qid, String lid){
+        try{
+            PreparedStatement prepState = conn.prepareStatement("UPDATE quizzes SET lesson_id = ? where quiz_id = ?");
+
+            prepState.setString(1, lid);
+            prepState.setString(2, qid);
+
+            System.out.println("Statment to be Executed: " + prepState);
+            prepState.executeUpdate();
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+    }//end addLessonToQuiz
+
+    public String getLessonQuizID(int lessonid){
+        String quizid = null;
+        try{
+            stmt = conn.createStatement();
+            sql = "SELECT quiz_id \n" +
+                    "FROM swenproject.quizzes\n"+
+                    "WHERE lesson_id = "+lessonid
+            ;
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                quizid = rs.getString(1);
+            }
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+         return quizid;
+
+    }
+
+    public ArrayList<Quiz> getAllQuizzes(){
+
+        ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+
+
+        try {
+            stmt = conn.createStatement();
+            sql = "SELECT * FROM quizzes;";
+
+
+            System.out.println("Statment to be Executed: " + sql);
+            ResultSet rs=stmt.executeQuery(sql);
+
+            while(rs.next()) {
+                Quiz q = new Quiz();
+                q.setQuizID(rs.getInt(1));
+                q.setName(rs.getString(2));
+                q.setLessonID(rs.getInt(3));
+                quizzes.add(q);
+
+            }
+
+
+                for(Quiz quiz: quizzes) {
+                    sql = "SELECT * FROM quiz_questions where quiz_id = " + quiz.getQuizID() + ";";
+                    System.out.println("Statment to be Executed: " + sql);
+                    ResultSet rs1 = stmt.executeQuery(sql);
+
+                    while(rs1.next()) {
+                        QuizQuestion qq = new QuizQuestion();
+                        qq.setQuestionID(rs1.getInt(1));
+                        qq.setQuestion(rs1.getString(2));
+
+                        quiz.setQuestions(qq);
+                    }
+                }
+
+            for(Quiz quiz: quizzes) {
+                for(QuizQuestion quizquest : quiz.getQuestions()){
+                    sql = "SELECT * FROM quiz_answers where question_id = "+quizquest.getQuestionID()+";";
+                    System.out.println("Statment to be Executed: " + sql);
+                    ResultSet rs2=stmt.executeQuery(sql);
+
+                    while(rs2.next()) {
+
+                        QuizAnswer qa = new QuizAnswer();
+                        qa.setAnswer(rs2.getString(3));
+                        qa.setIsCorrect(rs2.getBoolean(4));
+                        quizquest.setAnswers(qa);
+
+                    }
+
+                }
+
+            }
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+
+   return quizzes;
 
     }// end addProfessor
 

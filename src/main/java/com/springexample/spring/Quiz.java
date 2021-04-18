@@ -46,7 +46,7 @@ public class Quiz {
         this.minimumScore = _minimumScore;
     }
 
-    public ArrayList getQuestions() {//return user email
+    public ArrayList<QuizQuestion> getQuestions() {//return user email
         return questions;
     }
 

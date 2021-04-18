@@ -31,11 +31,19 @@ public class DashboardController
 
     @GetMapping("/dashboard/{email}/{course_id}")
     public String courseGet(@PathVariable("email") String _email,@PathVariable("course_id") String course_id,  RedirectAttributes redirectAttributes ) {
+
         Application.dl.connect();
+        ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(course_id, _email);
         redirectAttributes.addFlashAttribute("course", course_id);
         redirectAttributes.addFlashAttribute("email", _email);
-        redirectAttributes.addFlashAttribute("lessonList",Application.dl.getLearnerLessons(course_id, _email));
+        redirectAttributes.addFlashAttribute("lessonList",lessons);
+
+        for(Lesson lesson : lessons){
+            lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
+
+        }
         Application.dl.close();
+
         return "redirect:/lessonDashboard";
     } //returns lesson info page
 
@@ -71,13 +79,7 @@ public class DashboardController
         return _page;
     }
 
-    @GetMapping("/lessonDashboard")
-    public String lessonGet(Model model ) {
 
-        model.addAttribute("user", Application.currentUser);
-
-        return "lessonDashboard";
-    } //returns lesson info page
 
     @GetMapping("/addCourseForm/{email}")
     public String addCourse(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
