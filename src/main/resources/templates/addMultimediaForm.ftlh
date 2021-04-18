@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
+This The ADD MULTIMEDIA
 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>myPLS</title>
+  <title>myPLS - Add Multimedia</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -72,35 +71,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a href="#" class="d-block">${user.email}</a>
         </div>
       </div>
-
-
-      <!-- /.sidebar-menu -->
-
+      <!-- Sidebar Menu -->
+      <#if user.type == "Admin">
       <nav class="mt-2">
-              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
-                      <#if user.type == "Professor">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+             <a href="/addDiscussionForm/${user.email}" class="nav-link active">
+                          <i class="nav-icon fas fa-tachometer-alt"></i>
+                          <p>
+                            Add Discussion
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
 
+          </li>
 
-                <li class="nav-item menu-open">
-                   <a href="/addLessonForm/${user.email}" class="nav-link active">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                     <p>
-                       Add Lesson
-                       <i class="right fas fa-angle-left"></i>
-                     </p>
-                   </a>
-
-                </li>
-
-
-                 </li>
-
+        </ul>
+      </nav>
       </#if>
-              </ul>
-            </nav>
-
+      <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
@@ -112,12 +103,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> ${user.email} Lessons</h1>
+            <h1 class="m-0">Courses</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
+             <!-- <li class="breadcrumb-item active">Starter Page</li> -->
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -131,28 +122,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="row">
           <div class="col-lg-6">
 
-          <#list lessonList as lesson>
-
-             <div class="card card-primary card-outline">
-               <div class="card-header">
-                 <h5 class="m-0">${lesson.name}</h5>
-               </div>
-               <div class="card-body">
-                 <h6 class="card-title"></h6>
-
-                  <p class="card-text">${lesson.name}.</p>
-                  <#if lesson.quiz_id??>
-                  <a href="/removeQuiz/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
-
-                  <#else>
-                  <a href="/addQuiz/${course}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
-
-                  <a href="/addMultimediaForm" class="btn btn-primary">Add Multimedia</a>
-                  </#if>
-                </div>
-               </div>
-
-          </#list>
+          <div class="card card-info">
+                         <div class="card-header">
+                           <h3 class="card-title"><#if msg?? ><span style="color:red">${msg}</span><#else>Add Course</#if></h3>
+                            </div>
+                         <!-- /.card-header -->
+                         <!-- form start -->
+                         <form class="form-horizontal" action="/addMultimediaForm" method="post">
+                           <div class="card-body">
+                                <label for="file">Choose file to upload</label>
+                                <input type="file" id ="file" accept="image/*,video/*,.pdf">
+                           </div>
+                           <!-- /.card-body -->
+                           <div class="card-footer">
+                             <button type="submit" class="btn btn-info">Submit</button>
+                             <button type="reset" class="btn btn-default float-right">Cancel</button>
+                           </div>
+                           <!-- /.card-footer -->
+                         </form>
+                       </div>
 
 
         </div>

@@ -23,6 +23,11 @@ public class LessonDashboardController
         return "lessonDashboard";
     }//returns form page
 
+    @GetMapping("/addMultimediaForm")
+    public String addMultimedia(Model model) {
+        model.addAttribute("user", Application.currentUser);
+        return "addMultimediaForm";
+    }//returns form page
 
 
 
