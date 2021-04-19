@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Controller
 public class addMultimediaController {
@@ -32,11 +33,20 @@ public class addMultimediaController {
 
         Application.dl.connect();
         Application.dl.addMultimedia(fileLocation, Integer.parseInt(_lesson_id));
-        redirectAttributes.addFlashAttribute("lessonList", Application.dl.getLearnerLessons(_course_id, Application.currentUser.getEmail()));
-        Application.dl.close();
+        ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(_course_id, Application.currentUser.getEmail());
+
         redirectAttributes.addFlashAttribute("user",Application.currentUser);
         redirectAttributes.addFlashAttribute("course_id", _course_id);
         redirectAttributes.addFlashAttribute("lesson_id", _lesson_id);
+
+
+
+        for(Lesson lesson : lessons){
+            lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
+
+        }
+        redirectAttributes.addFlashAttribute("lessonList",lessons);
+        Application.dl.close();
 
         // redirectAttributes.addFlashAttribute("courseList",courseList);
         return "redirect:/lessonDashboard/";

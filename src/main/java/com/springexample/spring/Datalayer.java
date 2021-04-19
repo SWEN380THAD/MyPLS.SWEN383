@@ -27,13 +27,15 @@ public class Datalayer {
     public boolean connect() {
 
         String URL = "jdbc:mysql://localhost/";
-        String USER = "root";
-        String PASS = "Sambone11";
+        String USER = "student";
+        String PASS = "student";
         conn = null;
 
         try {
             conn = DriverManager.getConnection(URL+DB+"?serverTimezone=UTC", USER, PASS);
-        }catch (SQLException ex) {throw new RuntimeException("Error connecting to the database", ex);}
+        }catch (SQLException ex) {
+            throw new RuntimeException("Error connecting to the database", ex);
+        }
 
         return (conn != null);
 
