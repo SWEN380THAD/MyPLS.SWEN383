@@ -118,34 +118,7 @@ This The ADD MULTIMEDIA
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-6">
-
-          <div class="card card-info">
-                         <div class="card-header">
-                           <h3 class="card-title"><#if msg?? ><span style="color:red">${msg}</span><#else>Add Course</#if></h3>
-                            </div>
-                         <!-- /.card-header -->
-                         <!-- form start -->
-                         <form class="form-horizontal" action="/addMultimediaForm/${course_id}/${lesson_id}" method="post" enctype="multipart/form-data">
-                           <div class="card-body">
-                                <label for="file">Choose file to upload</label>
-                                <input type="file" id ="file" name ="file" accept="image/*,video/*,.pdf">
-                           </div>
-                           <!-- /.card-body -->
-                           <div class="card-footer">
-                             <button type="submit" class="btn btn-info">Submit</button>
-                             <button type="reset" class="btn btn-default float-right">Cancel</button>
-                           </div>
-                           <!-- /.card-footer -->
-                         </form>
-                       </div>
-
-
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <iframe src="${path}" title="filename" width = "100%">
     </div>
     <!-- /.content -->
   </div>

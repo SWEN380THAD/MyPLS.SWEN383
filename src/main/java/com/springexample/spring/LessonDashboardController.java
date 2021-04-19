@@ -23,10 +23,13 @@ public class LessonDashboardController
         return "lessonDashboard";
     }//returns form page
 
-    @GetMapping("/addMultimediaForm")
-    public String addMultimedia(Model model) {
-        model.addAttribute("user", Application.currentUser);
-        return "addMultimediaForm";
+    @GetMapping("/addMultimediaForm/{course_id}/{lesson_id}")
+    public String addMultimedia( @PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
+        redirectAttributes.addFlashAttribute("lesson_id",_lesson_id);
+
+        return "redirect:/addMultimediaForm";
     }//returns form page
 
 

@@ -145,9 +145,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <a href="/removeQuiz/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
 
                   <#else>
-                  <a href="/addQuiz/${course}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
+                  <a href="/addQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
 
-                  <a href="/addMultimediaForm" class="btn btn-primary">Add Multimedia</a>
+                  <a href="/addMultimediaForm/${course_id}/${lesson.id}" class="btn btn-primary">Add Multimedia</a>
                   </#if>
                 </div>
                </div>

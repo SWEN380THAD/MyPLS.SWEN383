@@ -21,9 +21,6 @@ public class addCourseFormController
         return "addCourseForm";
     }//returns form page
 
-
-
-
     @PostMapping("/addCourseForm")
     public String formPost(Course course, String user_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 

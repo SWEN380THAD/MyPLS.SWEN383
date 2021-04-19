@@ -1,6 +1,6 @@
 package com.springexample.spring;
 
-import org.omg.CORBA.Current;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,6 @@ public class DashboardController
 {
 
 
-
-
-
     @GetMapping("/dashboard")
     public String indexGet( Model model) {
         model.addAttribute("courseList",Application.courseList);
@@ -29,12 +26,26 @@ public class DashboardController
          return "dashboard";
     } //returns index page
 
+    @GetMapping("/viewMedia")
+    public String viewMedia( Model model) {
+        model.addAttribute("user",Application.currentUser);
+
+        String path = new ClassPathResource("project2.pdf").getPath();
+
+
+
+        model.addAttribute("path", path);
+
+        return "/viewMedia";
+    } //returns index page
+
+
     @GetMapping("/dashboard/{email}/{course_id}")
     public String courseGet(@PathVariable("email") String _email,@PathVariable("course_id") String course_id,  RedirectAttributes redirectAttributes ) {
 
         Application.dl.connect();
         ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(course_id, _email);
-        redirectAttributes.addFlashAttribute("course", course_id);
+        redirectAttributes.addFlashAttribute("course_id", course_id);
         redirectAttributes.addFlashAttribute("email", _email);
         redirectAttributes.addFlashAttribute("lessonList",lessons);
 

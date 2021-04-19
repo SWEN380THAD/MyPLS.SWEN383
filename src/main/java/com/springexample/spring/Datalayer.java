@@ -19,9 +19,6 @@ public class Datalayer {
 
     final String DEFAULT_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-
-
-
     Datalayer(){//constructor
 
     }//end constructor
@@ -30,8 +27,8 @@ public class Datalayer {
     public boolean connect() {
 
         String URL = "jdbc:mysql://localhost/";
-        String USER = "student";
-        String PASS = "student";
+        String USER = "root";
+        String PASS = "Sambone11";
         conn = null;
 
         try {
@@ -967,7 +964,7 @@ public class Datalayer {
 
 
 
-    }// end addProfessor
+    }// end quiz
 
     public void addLessonToQuiz(String qid, String lid){
         try{
@@ -1095,5 +1092,26 @@ public class Datalayer {
         System.out.println();
         return sha1;
     }//end of encrypt
+
+    //insert multimedia to table
+    public void addMultimedia(String fileName, int id) {
+
+        try {
+            stmt = conn.createStatement();
+            sql = "INSERT INTO media (media_link, lecture_id) values('"+ fileName + "', "+ id +" )";
+            System.out.println("Statment to be Executed: " + sql);
+
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+
+
+
+    }// end multimedia
 
 }//end class
