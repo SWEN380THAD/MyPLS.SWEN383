@@ -986,6 +986,25 @@ public class Datalayer {
 
     }//end addLessonToQuiz
 
+    public void removeLessonFromQuiz( String lid){
+        try{
+            PreparedStatement prepState = conn.prepareStatement("UPDATE quizzes SET lesson_id = ?  where lesson_id = ?");
+
+            prepState.setString(1, "0");
+            prepState.setString(2, lid);
+
+
+            System.out.println("Statment to be Executed: " + prepState);
+            prepState.executeUpdate();
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+    }//end addLessonToQuiz
+
     public String getLessonQuizID(int lessonid){
         String quizid = null;
         try{

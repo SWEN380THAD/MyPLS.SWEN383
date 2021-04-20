@@ -48,6 +48,26 @@ public class LessonDashboardController
 
     }
 
+    @GetMapping("/removeQuiz/{course_id}/{lesson_id}")
+    public String removeQuiz(@PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+
+        redirectAttributes.addFlashAttribute("user",Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
+        Application.dl.connect();
+        Application.dl.removeLessonFromQuiz( _lesson_id);
+        ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(_course_id, Application.currentUser.getEmail());
+        redirectAttributes.addFlashAttribute("lessonList",lessons);
+
+        for(Lesson lesson : lessons){
+            lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
+
+        }
+        Application.dl.close();
+
+        return "redirect:/lessonDashboard";
+
+    }
+
     @GetMapping("/addQuizDashboard")
     public String addQuiz(Model model) {
         model.addAttribute("user", Application.currentUser);
@@ -57,7 +77,7 @@ public class LessonDashboardController
     @GetMapping("/addQuizDashboard/{course_id}/{lesson_id}/{quiz_id}")
     public String assignQuizLesson(@PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, @PathVariable("quiz_id") String _quiz_id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("user",Application.currentUser);
-        redirectAttributes.addFlashAttribute("course", _course_id);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
         Application.dl.connect();
         Application.dl.addLessonToQuiz(_quiz_id, _lesson_id);
         ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(_course_id, Application.currentUser.getEmail());
