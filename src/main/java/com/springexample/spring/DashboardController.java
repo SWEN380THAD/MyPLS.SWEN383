@@ -30,9 +30,7 @@ public class DashboardController
     public String viewMedia( Model model) {
         model.addAttribute("user",Application.currentUser);
 
-        String path = new ClassPathResource("project2.pdf").getPath();
-
-
+        String path = new ClassPathResource("Project2_Demo.mp4").getPath();
 
         model.addAttribute("path", path);
 

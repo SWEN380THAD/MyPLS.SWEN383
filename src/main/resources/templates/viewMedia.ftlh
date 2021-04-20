@@ -118,7 +118,10 @@ This The ADD MULTIMEDIA
 
     <!-- Main content -->
     <div class="content">
-        <iframe src="${path}" title="filename" width = "100%" height = "100%">
+     <iframe src="${path}" title="filename" width= "100%" height = "800px">
+
+
+
     </div>
     <!-- /.content -->
   </div>

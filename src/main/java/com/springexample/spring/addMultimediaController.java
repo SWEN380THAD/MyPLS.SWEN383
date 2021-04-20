@@ -39,8 +39,6 @@ public class addMultimediaController {
         redirectAttributes.addFlashAttribute("course_id", _course_id);
         redirectAttributes.addFlashAttribute("lesson_id", _lesson_id);
 
-
-
         for(Lesson lesson : lessons){
             lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
 
