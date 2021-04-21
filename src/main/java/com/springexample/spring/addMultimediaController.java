@@ -27,9 +27,9 @@ public class addMultimediaController {
 
         String fileName = file.getOriginalFilename();
 
-        String fileLocation = "src/main/resources/multimedia/" + fileName;
+        String fileLocation = "src/main/resources/static/multimedia/" + fileName;
 
-        FileUploadUtil.saveFile("src/main/resources/multimedia", fileName, file);
+        FileUploadUtil.saveFile("src/main/resources/static/multimedia", fileName, file);
 
         Application.dl.connect();
         Application.dl.addMultimedia(fileLocation, Integer.parseInt(_lesson_id));

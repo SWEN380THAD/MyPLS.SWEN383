@@ -38,7 +38,7 @@ public class LessonDashboardController
     public String formPost(@PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         Application.dl.connect();
-        redirectAttributes.addFlashAttribute("quizzes",Application.dl.getAllQuizzes());
+        redirectAttributes.addFlashAttribute("quizzes",Application.dl.getAllQuizzes("0"));
         redirectAttributes.addFlashAttribute("course", _course_id);
         Application.dl.close();
         redirectAttributes.addFlashAttribute("lesson_id",_lesson_id);
@@ -91,6 +91,27 @@ public class LessonDashboardController
 
         return "redirect:/lessonDashboard";
     }//returns form page
+
+    @GetMapping("/deleteLesson/{course_id}/{lesson_id}")
+    public String deleteLesson(@PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
+        Application.dl.connect();
+        Application.dl.deleteLessonFromCourse(_course_id, _lesson_id);
+        ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(_course_id, Application.currentUser.getEmail());
+        redirectAttributes.addFlashAttribute("lessonList", lessons);
+
+        for (Lesson lesson : lessons) {
+            lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
+
+        }
+        Application.dl.close();
+
+        return "redirect:/lessonDashboard";
+    }
+
+
 
 
 }

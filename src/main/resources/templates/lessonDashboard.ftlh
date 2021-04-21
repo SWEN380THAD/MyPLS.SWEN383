@@ -26,18 +26,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/dashboard" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-              <a href="/dashboard" class="nav-link">Available Courses</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-              <a href="#" class="nav-link">Feedback</a>
-            </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+  <li class="nav-item d-none d-sm-inline-block">
+            <a href="/dashboard" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+                  <a href="/dashboard" class="nav-link">Available Courses</a>
+          </li>
+           <li class="nav-item d-none d-sm-inline-block">
+                  <a href="/discussionDashboard/${user.email}" class="nav-link">Discussion Groups</a>
+                </li>
+          <li class="nav-item d-none d-sm-inline-block">
+                  <a href="/feedbackDashboard/${user.email}" class="nav-link">Feedback</a>
+                </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Contact</a>
+        </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -87,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                    <a href="/addLessonForm/${user.email}" class="nav-link active">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                      <p>
-                       Add Lesson
+                       Add Lecture
                        <i class="right fas fa-angle-left"></i>
                      </p>
                    </a>
@@ -112,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> ${user.email} Lessons</h1>
+            <h1 class="m-0"> ${user.email} Lectures</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -140,13 +143,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <div class="card-body">
                  <h6 class="card-title"></h6>
 
-                  <p class="card-text">${lesson.name}.</p>
+                  <p class="card-text">${lesson.description}.</p>
                   <#if lesson.quiz_id??>
                      <a href="/removeQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
                   <#else>
                      <a href="/addQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
                   </#if>
                       <a href="/addMultimediaForm/${course_id}/${lesson.id}" class="btn btn-primary">Add Multimedia</a>
+                      <a href="/deleteLesson/${course_id}/${lesson.id}" class="btn btn-primary">Delete Lesson</a>
                 </div>
                </div>
 

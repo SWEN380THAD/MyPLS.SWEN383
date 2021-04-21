@@ -7,12 +7,37 @@ public class Lesson {
 
     private int id;
     private String name;
+    private String description;
     private String minimumScore;
     private String quiz_id;
+    private String startDate;
+    private String endDate;
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
 
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
     public int getId() {//return user password
         return id;

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+/*@Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
 
@@ -15,7 +15,11 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/multimedia/");
-        //exposeDirectory("resources/multimedia", registry);
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/templates/");
+        exposeDirectory("static", registry);
     }
 
     private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
@@ -27,3 +31,4 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/"+ uploadPath + "/");
     }
 }
+*/

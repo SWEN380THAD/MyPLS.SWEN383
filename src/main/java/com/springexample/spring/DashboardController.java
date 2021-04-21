@@ -26,11 +26,15 @@ public class DashboardController
          return "dashboard";
     } //returns index page
 
+
+
     @GetMapping("/viewMedia")
     public String viewMedia( Model model) {
         model.addAttribute("user",Application.currentUser);
 
-        String path = new ClassPathResource("Project2_Demo.mp4").getPath();
+
+
+        String path = new ClassPathResource("multimedia/Project2_Demo.mp4").getPath();
 
         model.addAttribute("path", path);
 
@@ -147,6 +151,18 @@ public class DashboardController
         redirectAttributes.addFlashAttribute("quiz", quiz);
         redirectAttributes.addFlashAttribute("user", Application.currentUser);
         return "redirect:/addQuizForm";
+    } //returns lesson info page
+
+    @GetMapping("/addLessonForm/{email}")
+    public String addLessonForm(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
+        Lesson lesson = new Lesson();
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("lesson", lesson);
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("courses",Application.dl.getAllCourses());
+
+        Application.dl.close();
+        return "redirect:/addLessonForm";
     } //returns lesson info page
 
 
