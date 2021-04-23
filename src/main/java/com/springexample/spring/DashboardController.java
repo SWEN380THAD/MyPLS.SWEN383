@@ -157,14 +157,26 @@ public class DashboardController
     public String addLessonForm(@PathVariable("email") String _email,RedirectAttributes redirectAttributes) {
         Lesson lesson = new Lesson();
         Application.dl.connect();
-        redirectAttributes.addFlashAttribute("lesson", lesson);
+        //redirectAttributes.addFlashAttribute("lesson", lesson);
         redirectAttributes.addFlashAttribute("user", Application.currentUser);
-        redirectAttributes.addFlashAttribute("courses",Application.dl.getAllCourses());
+
 
         Application.dl.close();
         return "redirect:/addLessonForm";
     } //returns lesson info page
 
+    @GetMapping("/linkLesson/{email}/{course_id}")
+    public String linkLessonForm(@PathVariable("email") String _email,@PathVariable("course_id") String _course_id,RedirectAttributes redirectAttributes) {
+
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("lessons", Application.dl.getAllLessons());
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
+
+
+        Application.dl.close();
+        return "redirect:/linkLessonForm";
+    } //returns lesson info page
 
 
 }

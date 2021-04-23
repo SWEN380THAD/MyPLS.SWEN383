@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
-public class addMultimediaController {
+public class MultimediaController {
 
     @GetMapping("/addMultimediaForm")
     public String formGet(Model model) {

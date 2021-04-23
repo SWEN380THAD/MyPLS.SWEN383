@@ -110,6 +110,18 @@ public class LessonDashboardController
 
         return "redirect:/lessonDashboard";
     }
+    @GetMapping("/editLesson/{lesson_id}")
+    public String editLesson(@PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("lesson", Application.dl.getLesson(_lesson_id));
+        Application.dl.close();
+
+        return "redirect:/addLessonForm";
+    }
+
+
 
 
 

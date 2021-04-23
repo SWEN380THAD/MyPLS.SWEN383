@@ -150,7 +150,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      <a href="/addQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
                   </#if>
                       <a href="/addMultimediaForm/${course_id}/${lesson.id}" class="btn btn-primary">Add Multimedia</a>
-                      <a href="/deleteLesson/${course_id}/${lesson.id}" class="btn btn-primary">Delete Lesson</a>
+                      <a href="/editLesson/${lesson.id}" class="btn btn-primary">Update Lecture</a>
+                      <a href="/deleteLesson/${course_id}/${lesson.id}" class="btn btn-primary">Delete Lecture</a>
                 </div>
                </div>
 

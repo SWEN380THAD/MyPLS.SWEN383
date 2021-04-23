@@ -13,7 +13,7 @@ import java.util.Optional;
 //controls the functionality of the form.ftlh page.
 //the variables created here can be passed to the form.ftlh page.
 @Controller
-public class addQuizFormController
+public class QuizFormController
 {
     private Quiz quiz = new Quiz();
 

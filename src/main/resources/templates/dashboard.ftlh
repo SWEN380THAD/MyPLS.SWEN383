@@ -184,6 +184,7 @@ This is a the main Dashboard
                   <#elseif user.type == "Professor">
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Manage Quizzes</a>
+                     <a href="linkLesson/${user.email}/${courses.id}" class="btn btn-primary">Add Lecture</a>
                   <#else>
                   </#if>
                 </div>

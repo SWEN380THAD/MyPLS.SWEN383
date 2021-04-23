@@ -12,27 +12,25 @@ import java.util.ArrayList;
 //controls the functionality of the form.ftlh page.
 //the variables created here can be passed to the form.ftlh page.
 @Controller
-public class addDiscussionFormController
+public class CourseFormController
 {
 
 
-    @GetMapping("/addDiscussionForm")
+    @GetMapping("/addCourseForm")
     public String formGet(Model model) {
-        return "addDiscussionForm";
+        return "addCourseForm";
     }//returns form page
 
-
-
-
-    @PostMapping("/addDiscussionForm")
-    public String formPost(DiscussionGroup discussion, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+    @PostMapping("/addCourseForm")
+    public String formPost(Course course, String user_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         Application.dl.connect();
-        Application.dl.addDiscussion(discussion);
-        ArrayList<Course> courseList = new ArrayList<>(Application.dl.getAllCourses());
+       String course_id = Application.dl.addCourse(course);
+        Application.dl.addProfessorToCourse(course_id,user_id);
+        Application.courseList =Application.dl.getAllCourses();
         Application.dl.close();
         redirectAttributes.addFlashAttribute("user",Application.currentUser);
-        redirectAttributes.addFlashAttribute("courseList",courseList);
+       // redirectAttributes.addFlashAttribute("courseList",courseList);
         return "redirect:/dashboard";
 
     }

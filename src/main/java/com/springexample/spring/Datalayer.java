@@ -593,7 +593,91 @@ public class Datalayer {
 
 
 
+    public ArrayList<Lesson> getAllLessons(){
+        ArrayList<Lesson> _lessonsList = new ArrayList<Lesson>();
+        try{
+            stmt = conn.createStatement();
 
+            sql =   "  SELECT\n" +
+                    "  l.lesson_id\n" +
+                    ",l.lesson_name\n" +
+                    ",l.minimum_score\n" +
+                    ",l.lesson_description\n"+
+                    ",l.startDate\n"+
+                    ",l.endDate\n" +
+                    "    FROM swenproject.lessons l \n"+
+                    "    where l.course_id = 0 \n" +
+                    "    order by l.lesson_order;";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                Lesson lesson = new Lesson();
+                lesson.setId(rs.getInt(1));
+                lesson.setName(rs.getString(2));
+                lesson.setMinimumScore(rs.getString(3));
+                lesson.setDescription(rs.getString(4));
+                lesson.setStartDate(rs.getString(5));
+                lesson.setEndDate(rs.getString(6));
+
+
+                _lessonsList.add(lesson);
+
+            }
+
+
+
+
+
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _lessonsList;
+
+    }
+
+    public Lesson getLesson(String _lesson_id){
+      Lesson lesson = new Lesson();
+        try{
+            stmt = conn.createStatement();
+
+            sql =   "  SELECT\n" +
+                    "  l.lesson_id\n" +
+                    ",l.lesson_name\n" +
+                    ",l.minimum_score\n" +
+                    ",l.lesson_description\n"+
+                    ",l.startDate\n"+
+                    ",l.endDate\n" +
+                    "    FROM swenproject.lessons l \n"+
+                    "    where l.lesson_id = "+_lesson_id+" \n" +
+                    "    order by l.lesson_order;";
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            rs.next();
+
+                lesson.setId(rs.getInt(1));
+                lesson.setName(rs.getString(2));
+                lesson.setMinimumScore(rs.getString(3));
+                lesson.setDescription(rs.getString(4));
+                lesson.setStartDate(rs.getString(5));
+                lesson.setEndDate(rs.getString(6));
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return lesson;
+
+    }
 
     public ArrayList<Lesson> getLearnerLessons(String _course, String _email){
         ArrayList<Lesson> _lessonsList = new ArrayList<Lesson>();
@@ -1160,22 +1244,21 @@ public class Datalayer {
 
     }//end addLessonToQuiz
 
-    public int addLesson(  Lesson lesson, String _course_id){
+    public int addLesson(  Lesson lesson){
 
         int i = 0;
 
 
             try {
 
-                PreparedStatement prepState = conn.prepareStatement("INSERT INTO lessons (lesson_name,minimum_score, course_id, lesson_order, startDate, endDate, lesson_description) values(  ?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement prepState = conn.prepareStatement("INSERT INTO lessons (lesson_name,minimum_score, lesson_order, startDate, endDate, lesson_description) values(  ?, ?, ?, ?, ?, ?)");
 
                 prepState.setString(1, lesson.getName());
                 prepState.setString(2, lesson.getMinimumScore());
-                prepState.setString(3, _course_id);
-                prepState.setString(4, "0");
-                prepState.setString(5, lesson.getStartDate());
-                prepState.setString(6, lesson.getEndDate());
-                prepState.setString(7, lesson.getDescription());
+                prepState.setString(3, "0");
+                prepState.setString(4, lesson.getStartDate());
+                prepState.setString(5, lesson.getEndDate());
+                prepState.setString(6, lesson.getDescription());
                 System.out.println("Statment to be Executed: " + prepState);
 
                 i = prepState.executeUpdate();
@@ -1191,6 +1274,56 @@ public class Datalayer {
         return i;
 
     }// end addLesson
+
+    public int linkLessonToCourse(  String _lesson_id, String _course_id){
+
+        int i = 0;
+
+
+        try {
+
+            PreparedStatement prepState = conn.prepareStatement("UPDATE lessons set course_id =  ? WHERE lesson_id = ?");
+
+            prepState.setString(1, _course_id);
+            prepState.setString(2, _lesson_id);
+
+            System.out.println("Statment to be Executed: " + prepState);
+
+            i = prepState.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+        return i;
+
+    }// end addLesson
+
+    public void updateLesson(Lesson lesson){
+        try{
+            PreparedStatement prepState = conn.prepareStatement("UPDATE lessons SET lesson_name = ?,minimum_score = ?, startDate = ?, endDate = ?, lesson_description = ? where lesson_id = ?");
+
+            prepState.setString(1, lesson.getName());
+            prepState.setString(2, lesson.getMinimumScore());
+            prepState.setString(3, lesson.getStartDate());
+            prepState.setString(4, lesson.getEndDate());
+            prepState.setString(5, lesson.getDescription());
+            prepState.setInt(6, lesson.getId());
+
+            System.out.println("Statment to be Executed: " + prepState);
+            prepState.executeUpdate();
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+    }//end addLessonToQuiz
 
     public ArrayList<String> getMediaLocation(int lesson_id){
         ArrayList<String> media_link = null;

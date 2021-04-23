@@ -34,8 +34,7 @@
              </li>
        <li class="nav-item d-none d-sm-inline-block">
                <a href="/feedbackDashboard/${user.email}" class="nav-link">Feedback</a>
-             </li>ef="#" class="nav-link">Feedback</a>
-            </li>
+        </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
@@ -130,60 +129,119 @@
                             </div>
                          <!-- /.card-header -->
                          <!-- form start -->
-                         <form class="form-horizontal" action="/addLessonForm" method="post">
-                           <div class="card-body">
-                             <div class="form-group row">
-                               <label class="col-sm-2 col-form-label">Lesson Name</label>
-                               <div class="col-sm-10">
-                                 <input type="text" class="form-control"  placeholder="Name" name="name">
-                               </div>
-                             </div>
-                             <div class="form-group row">
+                         <#if course_id??>
+                             <form class="form-horizontal" action="/linkLessonForm/${course_id}" method="post">
+                                                        <div class="card-body">
+                                                             <div class="form-group row">
+                                                                <label >Select Lesson</label>
+                                                                      <div class="col-sm-10">
+                                                                    <select class="form-control" name="lesson_id">
+                                                                        <#list lessons as lesson >
+                                                                            <option value=${lesson.getId()}> ${lesson.name} </option>
+                                                                         </#list>
+
+
+                                                                    </select>
+                                                                </div>
+                                                           </div>
+                                                        </div>
+                                                                                <!-- /.card-body -->
+                                                                                <div class="card-footer">
+                                                                                  <button type="submit" name = "add" value = "add" class="btn btn-info">Update</button>
+                                                                                  <button type="reset" class="btn btn-default float-right">Cancel</button>
+                                                                                </div>
+                                                                                <!-- /.card-footer -->
+                                                                              </form>
+                         <#elseif lesson??>
+                            <form class="form-horizontal" action="/updateLessonForm/${lesson.id}" method="post">
+                                <div class="card-body">
+                                        <div class="form-group row">
+                                         <label class="col-sm-2 col-form-label">Lesson Name</label>
+                                      <div class="col-sm-10">
+                                       <input type="text" class="form-control"  placeholder="Name" name="name" value="${lesson.name}">
+                                     </div>
+                                  </div>
+                                 <div class="form-group row">
                                <label  class="col-sm-2 col-form-label">Description</label>
-                               <div class="col-sm-10">
-                                 <input type="text" class="form-control"  placeholder="Description" name ="description">
-                               </div>
+                            <div class="col-sm-10">
+                               <input type="text" class="form-control"  value="${lesson.description}" placeholder="Description" name ="description" >
+                              </div>
                              </div>
                               <div class="form-group row">
-                                <label  class="col-sm-2 col-form-label">Minimum Score</label>
-                                <div class="col-sm-10">
-                                   <input type="text" class="form-control"  placeholder="Minimum Score" name ="minimumScore">
-                                </div>
+                               <label  class="col-sm-2 col-form-label">Minimum Score</label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control"  placeholder="Minimum Score" name ="minimumScore" value="${lesson.minimumScore}">
                               </div>
-                              <div class="form-group row">
-                                 <label  class="col-sm-2 col-form-label">Start Date</label>
-                             <div class="col-sm-10">
-                             <input type="date" class="form-control"  placeholder="mm/dd/yyyy" name ="startDate">
-                                   </div>
-                                </div>
-
-                                                            <div class="form-group row">
-                              <label  class="col-sm-2 col-form-label">Start Date</label>
-                                    <div class="col-sm-10">
-                                          <input type="date" class="form-control"  placeholder="mm/dd/yyyy" name ="endDate">
-                                                 </div>
-                                 </div>
+                               </div>
                                <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Course</label>
+                               <label  class="col-sm-2 col-form-label">Start Date</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="course_id">
-                                    <#list courses as course >
-                                    <option value=${course.getId()}> ${course.name} </option>
-                                    </#list>
+                                  <input type="date" class="form-control"  placeholder="mm/dd/yyyy" name="startDate" value="${lesson.startDate}" >
+                                    </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                   <label  class="col-sm-2 col-form-label">Start Date</label>
+                                        <div class="col-sm-10">
+                                    <input type="date" class="form-control"  placeholder="mm/dd/yyyy" name ="endDate" value="${lesson.endDate}">
+                                           </div>
+                                       </div>
 
 
-                                    </select>
-                                </div>
-                                </div>
+                                     </div>
+                                   <!-- /.card-body -->
+                                  <div class="card-footer">
+                                  <button type="submit" class="btn btn-info">Update</button>
+                                  <button type="reset" class="btn btn-default float-right">Cancel</button>
+                                    </div>
+                                     <!-- /.card-footer -->
+                        </form>
+                         <#else>
+                          <form class="form-horizontal" action="/addLessonForm" method="post">
+                                                    <div class="card-body">
+                                                      <div class="form-group row">
+                                                        <label class="col-sm-2 col-form-label">Lesson Name</label>
+                                                        <div class="col-sm-10">
+                                                          <input type="text" class="form-control"  placeholder="Name" name="name">
+                                                        </div>
+                                                      </div>
+                                                      <div class="form-group row">
+                                                        <label  class="col-sm-2 col-form-label">Description</label>
+                                                        <div class="col-sm-10">
+                                                          <input type="text" class="form-control"  placeholder="Description" name ="description">
+                                                        </div>
+                                                      </div>
+                                                       <div class="form-group row">
+                                                         <label  class="col-sm-2 col-form-label">Minimum Score</label>
+                                                         <div class="col-sm-10">
+                                                            <input type="text" class="form-control"  placeholder="Minimum Score" name ="minimumScore">
+                                                         </div>
+                                                       </div>
+                                                       <div class="form-group row">
+                                                          <label  class="col-sm-2 col-form-label">Start Date</label>
+                                                      <div class="col-sm-10">
+                                                      <input type="date" class="form-control"  placeholder="mm/dd/yyyy" name ="startDate">
+                                                            </div>
+                                                         </div>
 
-                           </div>
-                           <!-- /.card-body -->
-                           <div class="card-footer">
-                             <button type="submit" class="btn btn-info">Submit</button>
-                             <button type="reset" class="btn btn-default float-right">Cancel</button>
-                           </div>
-                           <!-- /.card-footer -->
-                         </form>
+                                                                                     <div class="form-group row">
+                                                       <label  class="col-sm-2 col-form-label">Start Date</label>
+                                                             <div class="col-sm-10">
+                                                                   <input type="date" class="form-control"  placeholder="mm/dd/yyyy" name ="endDate">
+                                                                          </div>
+                                                          </div>
+
+
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                    <div class="card-footer">
+                                                      <button type="submit" class="btn btn-info">Submit</button>
+                                                      <button type="reset" class="btn btn-default float-right">Cancel</button>
+                                                    </div>
+                                                    <!-- /.card-footer -->
+                                                  </form>
+
+						</#if>
                        </div>
 
 
