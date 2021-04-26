@@ -29,7 +29,7 @@ public class Datalayer {
     public boolean connect() {
 
         String URL = "jdbc:mysql://localhost/";
-        String USER = "student";
+        String USER = "root";
         String PASS = "student";
         conn = null;
 
@@ -260,6 +260,35 @@ public class Datalayer {
                 prepState.setString(3, _email);
                 prepState.setString(4, _type);
                 prepState.setString(5, _verificationCode);
+                System.out.println("Statment to be Executed: " + prepState);
+
+                i = prepState.executeUpdate();
+                JOptionPane.showMessageDialog(null, "You have added " + i + " row");
+
+
+            } catch (SQLException sqle) {
+                System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+                System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+                sqle.printStackTrace();
+            }// end of catch
+        }
+        return i;
+
+    }// end addUser
+
+    public int addProfessorToCourse(  String _pw, String _email, String _type){
+        int i = 0;
+
+        if(userNotExist(_email)) {
+            try {
+
+                PreparedStatement prepState = conn.prepareStatement("INSERT INTO professor (status,Password, email, type) values(  ?, ?, ?, ?)");
+
+                prepState.setString(1, "0");
+
+                prepState.setString(2, _pw);
+                prepState.setString(3, _email);
+                prepState.setString(4, _type);
                 System.out.println("Statment to be Executed: " + prepState);
 
                 i = prepState.executeUpdate();
@@ -703,7 +732,7 @@ public class Datalayer {
                     "    order by l.lesson_order;";
 
 
-            System.out.println("Statment to be Executed: "+ sql);
+            System.out.println("Statement to be Executed: "+ sql);
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 Lesson lesson = new Lesson();
@@ -790,7 +819,7 @@ public class Datalayer {
                     "    order by g.created;";
 
 
-            System.out.println("Statment to be Executed: "+ sql);
+            System.out.println("Statement to be Executed: "+ sql);
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 DiscussionGroup group = new DiscussionGroup();
@@ -818,6 +847,8 @@ public class Datalayer {
         return _discussionList;
     }
 
+
+
     public void addDiscussion(DiscussionGroup _discussion){
         try{
             PreparedStatement prepState = conn.prepareStatement("INSERT INTO discussiongroups (group_name, group_desc) values(  ?, ?)");
@@ -828,7 +859,7 @@ public class Datalayer {
             prepState.setString(1, _discussion.getName());
             prepState.setString(2, _discussion.getDescription());
 
-            System.out.println("Statment to be Executed: " + prepState);
+            System.out.println("Statement to be Executed: " + prepState);
             prepState.executeUpdate();
 
         } catch (SQLException sqle) {
@@ -1071,7 +1102,7 @@ public class Datalayer {
             prepState.executeUpdate();
 
         } catch (SQLException sqle) {
-            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("\nERROR CAN NOT EXECUTE STATEMENT");
             System.out.println("ERROR MESSAGE-> " + sqle + "\n");
             sqle.printStackTrace();
         }// end of catch
@@ -1187,7 +1218,9 @@ public class Datalayer {
 
    return quizzes;
 
-    }// end addProfessor
+    }// end addQuiz
+
+
 
     public Quiz getQuiz(String _quiz_id){
 
