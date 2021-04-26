@@ -1,5 +1,7 @@
 package com.springexample.spring;
 
+import org.springframework.core.io.ClassPathResource;
+
 import javax.swing.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -1346,6 +1348,34 @@ public class Datalayer {
         }// end catch
 
         return media_link;
+
+    }
+
+    public ArrayList<String> getAllMultimedia(String _leson_id){
+        ArrayList<String> _mmList = new ArrayList<String>();
+
+        try{
+            stmt = conn.createStatement();
+
+            sql = "SELECT * FROM swenproject.media WHERE lecture_id = " + _leson_id;
+
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+
+                String[] urlSplit = rs.getString(3).split("static");
+                String url = new ClassPathResource(urlSplit[1].substring(1)).getPath();
+                _mmList.add(url);
+            }
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return _mmList;
 
     }
 
