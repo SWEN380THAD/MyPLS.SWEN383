@@ -1,6 +1,7 @@
 package com.springexample.spring;
 
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,30 @@ public class LessonDashboardController
         redirectAttributes.addFlashAttribute("lesson_id",_lesson_id);
 
         return "redirect:/addMultimediaForm";
+    }//returns form page
+
+    @GetMapping("/viewMedia")
+    public String viewMedia( Model model) {
+//        model.addAttribute("user",Application.currentUser);
+//
+//        String path = new ClassPathResource("multimedia/Project2_Demo.mp4").getPath();
+//
+//        model.addAttribute("path", path);
+
+        return "/viewMedia";
+    } //returns index page
+
+    @GetMapping("/viewMultimedia/{course_id}/{lesson_id}")
+    public String viewMultimedia( @PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
+        redirectAttributes.addFlashAttribute("lesson_id",_lesson_id);
+
+        Application.dl.connect();
+        redirectAttributes.addFlashAttribute("paths",Application.dl.getAllMultimedia(_lesson_id));
+        Application.dl.close();
+
+        return "redirect:/viewMedia";
     }//returns form page
 
 

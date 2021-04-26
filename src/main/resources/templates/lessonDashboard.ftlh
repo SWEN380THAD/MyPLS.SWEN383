@@ -128,6 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.content-header -->
 
+
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
@@ -144,6 +145,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <h6 class="card-title"></h6>
 
                   <p class="card-text">${lesson.description}.</p>
+
+                  <#if user.type == "Professor">
                   <#if lesson.quiz_id??>
                      <a href="/removeQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
                   <#else>
@@ -152,6 +155,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <a href="/addMultimediaForm/${course_id}/${lesson.id}" class="btn btn-primary">Add Multimedia</a>
                       <a href="/editLesson/${lesson.id}" class="btn btn-primary">Update Lecture</a>
                       <a href="/deleteLesson/${course_id}/${lesson.id}" class="btn btn-primary">Delete Lecture</a>
+                      <#else >
+                      <a href="/viewMultimedia/${course_id}/${lesson.id}" class="btn btn-primary">View Multimedia</a>
+                      </#if>
                 </div>
                </div>
 

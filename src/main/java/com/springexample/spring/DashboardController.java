@@ -27,21 +27,6 @@ public class DashboardController
     } //returns index page
 
 
-
-    @GetMapping("/viewMedia")
-    public String viewMedia( Model model) {
-        model.addAttribute("user",Application.currentUser);
-
-
-
-        String path = new ClassPathResource("multimedia/Project2_Demo.mp4").getPath();
-
-        model.addAttribute("path", path);
-
-        return "/viewMedia";
-    } //returns index page
-
-
     @GetMapping("/dashboard/{email}/{course_id}")
     public String courseGet(@PathVariable("email") String _email,@PathVariable("course_id") String course_id,  RedirectAttributes redirectAttributes ) {
 
