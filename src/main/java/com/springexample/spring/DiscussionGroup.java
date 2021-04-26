@@ -49,7 +49,7 @@ public class DiscussionGroup {
         groupMembers.add(user);
     }
 
-    public void removeroupMember(User user ) {
+    public void removeGroupMember(User user ) {
         groupMembers.remove(user);
     }
 
