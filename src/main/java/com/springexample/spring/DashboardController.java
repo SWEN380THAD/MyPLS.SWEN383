@@ -38,7 +38,7 @@ public class DashboardController
 
         for(Lesson lesson : lessons){
             lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
-
+            lesson.setMedia(Application.dl.getAllMultimedia(lesson.getId()+""));
         }
         Application.dl.close();
 

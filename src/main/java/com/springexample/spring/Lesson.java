@@ -12,21 +12,23 @@ public class Lesson {
     private String quiz_id;
     private String startDate;
     private String endDate;
+    private ArrayList<String> media;
+    private Quiz lesson_quiz;
 
-    public String getEndDate() {
-        return endDate;
-    }
+    public Quiz getLesson_quiz() {  return lesson_quiz; }
+    public void setLesson_quiz(Quiz lesson_quiz) {  this.lesson_quiz = lesson_quiz;  }
 
+    public ArrayList<String> getMedia() {  return media; }
+    public void setMedia(ArrayList<String> media) {   this.media = media;  }
+
+    public String getEndDate() {  return endDate;  }
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-
-
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -34,7 +36,6 @@ public class Lesson {
     public String getStartDate() {
         return startDate;
     }
-
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
@@ -42,7 +43,6 @@ public class Lesson {
     public int getId() {//return user password
         return id;
     }
-
     public void setId(int _id) {//set user password
         this.id = _id;
     }
@@ -50,7 +50,6 @@ public class Lesson {
     public String getName() {//return user password
         return name;
     }
-
     public void setName(String _name) {//set user password
         this.name = _name;
     }
@@ -58,7 +57,6 @@ public class Lesson {
     public String getMinimumScore() {//return user email
         return minimumScore;
     }
-
     public void setMinimumScore(String _minimumScore) {//set user email
         this.minimumScore = _minimumScore;
     }
@@ -67,7 +65,6 @@ public class Lesson {
     public String getQuiz_id() {
         return quiz_id;
     }
-
     public void setQuiz_id(String quiz_id) {
         this.quiz_id = quiz_id;
     }

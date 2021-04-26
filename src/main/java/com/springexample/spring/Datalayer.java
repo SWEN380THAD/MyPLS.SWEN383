@@ -1189,6 +1189,106 @@ public class Datalayer {
 
     }// end addProfessor
 
+    public Quiz getQuiz(String _quiz_id){
+
+        Quiz q = new Quiz();
+
+        try {
+            stmt = conn.createStatement();
+            sql = "SELECT * FROM quizzes where quiz_id like '"+_quiz_id+"';";
+
+
+            System.out.println("Statment to be Executed: " + sql);
+            ResultSet rs=stmt.executeQuery(sql);
+
+            while(rs.next()) {
+
+                q.setQuizID(rs.getInt(1));
+                q.setName(rs.getString(2));
+                q.setLessonID(rs.getInt(3));
+
+            }
+
+
+                sql = "SELECT * FROM quiz_questions where quiz_id = " + _quiz_id+ ";";
+                System.out.println("Statment to be Executed: " + sql);
+                ResultSet rs1 = stmt.executeQuery(sql);
+
+                while(rs1.next()) {
+                    QuizQuestion qq = new QuizQuestion();
+                    qq.setQuestionID(rs1.getInt(1));
+                    qq.setQuestion(rs1.getString(2));
+
+                    q.setQuestions(qq);
+                }
+
+
+
+                for(QuizQuestion quizquest : q.getQuestions()){
+                    sql = "SELECT * FROM quiz_answers where question_id = "+quizquest.getQuestionID()+";";
+                    System.out.println("Statment to be Executed: " + sql);
+                    ResultSet rs2=stmt.executeQuery(sql);
+
+                    while(rs2.next()) {
+
+                        QuizAnswer qa = new QuizAnswer();
+                        qa.setAnswerID(rs2.getInt(1));
+                        qa.setQuestionID(rs2.getInt(2));
+                        qa.setAnswer(rs2.getString(3));
+                        qa.setIsCorrect(rs2.getBoolean(4));
+                        quizquest.setAnswers(qa);
+
+                    }
+
+                }
+
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+
+        return q;
+
+    }// end addProfessor
+
+    public ArrayList<String> getCorrectAnswerList(){
+
+        ArrayList<String> correctAnswerList = new ArrayList<String>();
+
+        try {
+            stmt = conn.createStatement();
+
+                sql = "SELECT * FROM quiz_answers where correct = 1;";
+                System.out.println("Statment to be Executed: " + sql);
+                ResultSet rs2=stmt.executeQuery(sql);
+
+                while(rs2.next()) {
+
+
+                    correctAnswerList.add(rs2.getString(1));
+
+
+                }
+
+
+
+
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+
+        return correctAnswerList;
+
+    }// end addProfessor
+
     public  String encrypt(String secret){//Encrypt password
         String sha1 = "";
         String value = new String(secret);

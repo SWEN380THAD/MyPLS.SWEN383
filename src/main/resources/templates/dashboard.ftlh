@@ -186,6 +186,7 @@ This is a the main Dashboard
                      <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Manage Quizzes</a>
                      <a href="linkLesson/${user.email}/${courses.id}" class="btn btn-primary">Add Lecture</a>
                   <#else>
+                        <a href="dashboard/${user.email}/${courses.id}" class="btn btn-primary">Open Course</a>
                   </#if>
                 </div>
                </div>

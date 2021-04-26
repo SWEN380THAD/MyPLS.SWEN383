@@ -4,11 +4,10 @@ package com.springexample.spring;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 //controls the functionality of the form.ftlh page.
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 public class LessonDashboardController
 {
 
+    private ArrayList<String> answerList = new ArrayList<String>();
 
     @GetMapping("/lessonDashboard")
     public String formGet(Model model) {
@@ -44,20 +44,97 @@ public class LessonDashboardController
         return "/viewMedia";
     } //returns index page
 
-    @GetMapping("/viewMultimedia/{course_id}/{lesson_id}")
-    public String viewMultimedia( @PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/viewMultimedia/{course_id}/{lesson_id}/{path}/{file}")
+    public String viewMultimedia( @PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, @PathVariable("path") String _path,  @PathVariable("file") String _file, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("user", Application.currentUser);
         redirectAttributes.addFlashAttribute("course_id", _course_id);
         redirectAttributes.addFlashAttribute("lesson_id",_lesson_id);
+        redirectAttributes.addFlashAttribute("path",_path+"/"+_file);
 
-        Application.dl.connect();
+
+        /*Application.dl.connect();
         redirectAttributes.addFlashAttribute("paths",Application.dl.getAllMultimedia(_lesson_id));
-        Application.dl.close();
+        Application.dl.close();*/
 
         return "redirect:/viewMedia";
     }//returns form page
 
+    @GetMapping("/takeQuiz")
+    public String takeQuizform( Model model) {
 
+
+        return "/takeQuizForm";
+    }//returns form page
+
+    @GetMapping("/takeQuiz/{course_id}/{lesson_id}/{quiz_id}/{question}")
+    public String takeQuiz( @PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id,  @PathVariable("quiz_id") String _quiz_id, @PathVariable("question") int question, RedirectAttributes redirectAttributes) {
+
+        answerList.removeAll(answerList);
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
+        redirectAttributes.addFlashAttribute("lesson_id",_lesson_id);
+        redirectAttributes.addFlashAttribute("question_number",1);
+        redirectAttributes.addFlashAttribute("quiz_id",_quiz_id);
+
+        Application.dl.connect();
+        Quiz quiz = Application.dl.getQuiz(_quiz_id);
+        redirectAttributes.addFlashAttribute("quizQuestion", quiz.getQuestions().get(question));
+        Application.dl.close();
+
+
+
+        /*Application.dl.connect();
+        redirectAttributes.addFlashAttribute("paths",Application.dl.getAllMultimedia(_lesson_id));
+        Application.dl.close();*/
+
+        return "redirect:/takeQuiz";
+    }//returns form page
+
+
+    @RequestMapping(value = "/submitAnswer/{quiz_id}/{question_number}", method = RequestMethod.POST, params = "add")
+    public String submitAnswer(@PathVariable("quiz_id") String _quiz_id, @PathVariable("question_number") int question_number, @RequestParam(name="radio", required = true) String radio, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+
+        answerList.add(radio);
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        Application.dl.connect();
+        Quiz quiz = Application.dl.getQuiz(_quiz_id);
+        redirectAttributes.addFlashAttribute("quizQuestion", quiz.getQuestions().get(question_number));
+        Application.dl.close();
+        redirectAttributes.addFlashAttribute("quiz_id",_quiz_id);
+        if( question_number+1 == quiz.getQuestions().size()){
+
+            redirectAttributes.addFlashAttribute("last_question", 1);
+        }
+        redirectAttributes.addFlashAttribute("question_number",question_number+1);
+        return "redirect:/takeQuiz";
+    }
+
+
+    @RequestMapping(value = "/submitAnswer/{quiz_id}/{question_number}", method = RequestMethod.POST, params = "submit")
+    public String submitQuiz(@PathVariable("quiz_id") String _quiz_id, @RequestParam(name="radio", required = true) String radio, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+
+        answerList.add(radio);
+        Application.dl.connect();
+        int correct = 0;
+        ArrayList<String > cAnswerList = Application.dl.getCorrectAnswerList();
+        for(String ans:answerList){
+                for(String cans:cAnswerList){
+                    if( ans.equals(cans)){
+                        correct = correct +1;
+                    }
+
+                }
+
+        }
+        int listSize = answerList.size();
+
+        double score = Math.round((double)correct/(double)listSize * 100.0);
+        redirectAttributes.addFlashAttribute("user", Application.currentUser);
+
+        Quiz quiz = Application.dl.getQuiz(_quiz_id);
+
+        return "redirect:/lessonDashboard";
+    }
 
     @GetMapping("/addQuiz/{course_id}/{lesson_id}")
     public String formPost(@PathVariable("course_id") String _course_id, @PathVariable("lesson_id") String _lesson_id, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page

@@ -147,17 +147,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p class="card-text">${lesson.description}.</p>
 
                   <#if user.type == "Professor">
-                  <#if lesson.quiz_id??>
-                     <a href="/removeQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
-                  <#else>
-                     <a href="/addQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
+                    <#if lesson.quiz_id??>
+                         <a href="/removeQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Remove Quiz</a>
+                    <#else>
+                         <a href="/addQuiz/${course_id}/${lesson.id}" class="btn btn-primary">Add Quiz</a>
+                    </#if>
+                        <a href="/addMultimediaForm/${course_id}/${lesson.id}" class="btn btn-primary">Add Multimedia</a>
+                        <a href="/editLesson/${lesson.id}" class="btn btn-primary">Update Lecture</a>
+                        <a href="/deleteLesson/${course_id}/${lesson.id}" class="btn btn-primary">Delete Lecture</a>
+                  <#else >
+                    <#if lesson.getMedia()?has_content>
+                        <#list lesson.getMedia() as path>
+                            <a href="/viewMultimedia/${course_id}/${lesson.id}/${path}" class="btn btn-primary">${path}</a> <br><br>
+                        </#list>
+                    </#if>
+                    <#if lesson.getQuiz_id()?has_content>
+                        <a href="/takeQuiz/${course_id}/${lesson.id}/${lesson.getQuiz_id()}/0" class="btn btn-primary">Take Quiz</a> <br><br>
+                    </#if>
                   </#if>
-                      <a href="/addMultimediaForm/${course_id}/${lesson.id}" class="btn btn-primary">Add Multimedia</a>
-                      <a href="/editLesson/${lesson.id}" class="btn btn-primary">Update Lecture</a>
-                      <a href="/deleteLesson/${course_id}/${lesson.id}" class="btn btn-primary">Delete Lecture</a>
-                      <#else >
-                      <a href="/viewMultimedia/${course_id}/${lesson.id}" class="btn btn-primary">View Multimedia</a>
-                      </#if>
                 </div>
                </div>
 

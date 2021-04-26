@@ -24,6 +24,9 @@ public class QuizAnswer {
     public int getQuestionID() {//return user password
         return questionID;
     }
+    public void setQuestionID(int questionID) {
+        this.questionID = questionID;
+    }
 
     public void setName(int _questionID) {//set user password
         this.questionID = _questionID;
