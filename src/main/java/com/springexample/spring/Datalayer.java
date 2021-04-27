@@ -30,7 +30,7 @@ public class Datalayer {
 
         String URL = "jdbc:mysql://localhost/";
         String USER = "root";
-        String PASS = "student";
+        String PASS = "Sambone11";
         conn = null;
 
         try {
@@ -121,6 +121,7 @@ public class Datalayer {
             user.setPw(rs.getString(2));
             user.setEmail(rs.getString(3));
             user.setType(rs.getString(4));
+            user.setUser_id(rs.getString(1));
 
 
 
@@ -647,7 +648,7 @@ public class Datalayer {
                 Lesson lesson = new Lesson();
                 lesson.setId(rs.getInt(1));
                 lesson.setName(rs.getString(2));
-                lesson.setMinimumScore(rs.getString(3));
+                //lesson.setMinimumScore(rs.getString(3));
                 lesson.setDescription(rs.getString(4));
                 lesson.setStartDate(rs.getString(5));
                 lesson.setEndDate(rs.getString(6));
@@ -695,7 +696,7 @@ public class Datalayer {
 
                 lesson.setId(rs.getInt(1));
                 lesson.setName(rs.getString(2));
-                lesson.setMinimumScore(rs.getString(3));
+                //lesson.setMinimumScore(rs.getString(3));
                 lesson.setDescription(rs.getString(4));
                 lesson.setStartDate(rs.getString(5));
                 lesson.setEndDate(rs.getString(6));
@@ -738,7 +739,7 @@ public class Datalayer {
                 Lesson lesson = new Lesson();
                 lesson.setId(rs.getInt(1));
                 lesson.setName(rs.getString(2));
-                lesson.setMinimumScore(rs.getString(3));
+                //lesson.setMinimumScore(rs.getInt(3));
                 lesson.setDescription(rs.getString(4));
                 lesson.setStartDate(rs.getString(5));
                 lesson.setEndDate(rs.getString(6));
@@ -1389,7 +1390,7 @@ public class Datalayer {
                 PreparedStatement prepState = conn.prepareStatement("INSERT INTO lessons (lesson_name,minimum_score, lesson_order, startDate, endDate, lesson_description) values(  ?, ?, ?, ?, ?, ?)");
 
                 prepState.setString(1, lesson.getName());
-                prepState.setString(2, lesson.getMinimumScore());
+                prepState.setString(2, "" + lesson.getMinimumScore());
                 prepState.setString(3, "0");
                 prepState.setString(4, lesson.getStartDate());
                 prepState.setString(5, lesson.getEndDate());
@@ -1443,7 +1444,7 @@ public class Datalayer {
             PreparedStatement prepState = conn.prepareStatement("UPDATE lessons SET lesson_name = ?,minimum_score = ?, startDate = ?, endDate = ?, lesson_description = ? where lesson_id = ?");
 
             prepState.setString(1, lesson.getName());
-            prepState.setString(2, lesson.getMinimumScore());
+            prepState.setString(2, "" + lesson.getMinimumScore());
             prepState.setString(3, lesson.getStartDate());
             prepState.setString(4, lesson.getEndDate());
             prepState.setString(5, lesson.getDescription());
@@ -1509,6 +1510,54 @@ public class Datalayer {
         }// end catch
 
         return _mmList;
+
+    }
+
+    //insert quiz scores into database
+    public void saveQuiz(String user_id, String quiz_id, String quizScore) {
+
+        try {
+            stmt = conn.createStatement();
+            sql = "INSERT INTO quiz_scores (user_id, quiz_id, quiz_score) values("+ user_id +", " + quiz_id +", " + quizScore + " )";
+            System.out.println("Statment to be Executed: " + sql);
+
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException sqle) {
+            System.out.println("\nERROR CAN NOT EXECUTE STATMENT");
+            System.out.println("ERROR MESSAGE-> " + sqle + "\n");
+            sqle.printStackTrace();
+        }// end of catch
+
+    }// end multimedia
+
+    public ArrayList<QuizGrades> getQuizScores(String user_id){
+        ArrayList<QuizGrades> quizGrades = new ArrayList<QuizGrades>();
+        try{
+            stmt = conn.createStatement();
+            sql = "SELECT * FROM swenproject.quizzes q \n" +
+            "join swenproject.quiz_scores qs on q.quiz_id = qs.quiz_id \n" +
+            "where qs.user_id = " + user_id;
+
+            System.out.println("Statment to be Executed: "+ sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                QuizGrades grade = new QuizGrades();
+                grade.setQuiz_id(rs.getString(1));
+                grade.setName(rs.getString(2));
+                grade.setLesson_id(rs.getString(3));
+                grade.setScore(rs.getString(6));
+
+                quizGrades.add(grade);
+            }
+
+        }catch(SQLException sqle){
+            JOptionPane.showMessageDialog(null, "Username or Password do not match!");
+            System.out.println("ERROR MESSAGE -> "+sqle);
+            System.out.println("ERROR SQLException in getResultSet()");
+        }// end catch
+
+        return quizGrades;
 
     }
 

@@ -155,7 +155,7 @@ This The ADD COURSE FORM
                                    </div>
                                </div>
                                <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Professer</label>
+                                <label class="col-sm-2 col-form-label">Professor</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" name="user_id">
                                     <#list professors as prof >

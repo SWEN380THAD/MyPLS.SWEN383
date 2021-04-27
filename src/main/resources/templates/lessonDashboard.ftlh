@@ -161,9 +161,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="/viewMultimedia/${course_id}/${lesson.id}/${path}" class="btn btn-primary">${path}</a> <br><br>
                         </#list>
                     </#if>
-                    <#if lesson.getQuiz_id()?has_content>
-                        <a href="/takeQuiz/${course_id}/${lesson.id}/${lesson.getQuiz_id()}/0" class="btn btn-primary">Take Quiz</a> <br><br>
-                    </#if>
+                    <#if lesson.getQuizScore()?has_content>
+                        <a href="" class="btn btn-primary disabled">Quiz Score: ${lesson.getQuizScore()}</a> <br><br>
+                    <#elseif lesson.getQuiz_id()?has_content>
+                    <a href="/takeQuiz/${course_id}/${lesson.id}/${lesson.getQuiz_id()}/0" class="btn btn-primary">Take Quiz</a> <br><br>
+
+
+                   </#if>
                   </#if>
                 </div>
                </div>

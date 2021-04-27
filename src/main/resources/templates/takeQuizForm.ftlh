@@ -124,7 +124,7 @@ This The build Quiz FORM
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-6">
- <form class="form-horizontal" action="submitAnswer/${quiz_id}/${question_number}" method="post">
+ <form class="form-horizontal" action="submitAnswer/${course_id}/${quiz_id}/${question_number}" method="post">
 
           <div class="card card-info">
                          <div class="card-header">

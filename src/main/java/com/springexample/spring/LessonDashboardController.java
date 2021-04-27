@@ -91,8 +91,8 @@ public class LessonDashboardController
     }//returns form page
 
 
-    @RequestMapping(value = "/submitAnswer/{quiz_id}/{question_number}", method = RequestMethod.POST, params = "add")
-    public String submitAnswer(@PathVariable("quiz_id") String _quiz_id, @PathVariable("question_number") int question_number, @RequestParam(name="radio", required = true) String radio, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+    @RequestMapping(value = "/submitAnswer/{course_id}/{quiz_id}/{question_number}", method = RequestMethod.POST, params = "add")
+    public String submitAnswer(@PathVariable("course_id") String _course_id, @PathVariable("quiz_id") String _quiz_id, @PathVariable("question_number") int question_number, @RequestParam(name="radio", required = true) String radio, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         answerList.add(radio);
         redirectAttributes.addFlashAttribute("user", Application.currentUser);
@@ -101,6 +101,7 @@ public class LessonDashboardController
         redirectAttributes.addFlashAttribute("quizQuestion", quiz.getQuestions().get(question_number));
         Application.dl.close();
         redirectAttributes.addFlashAttribute("quiz_id",_quiz_id);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
         if( question_number+1 == quiz.getQuestions().size()){
 
             redirectAttributes.addFlashAttribute("last_question", 1);
@@ -110,11 +111,17 @@ public class LessonDashboardController
     }
 
 
-    @RequestMapping(value = "/submitAnswer/{quiz_id}/{question_number}", method = RequestMethod.POST, params = "submit")
-    public String submitQuiz(@PathVariable("quiz_id") String _quiz_id, @RequestParam(name="radio", required = true) String radio, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
+    @RequestMapping(value = "/submitAnswer/{course_id}/{quiz_id}/{question_number}", method = RequestMethod.POST, params = "submit")
+    public String submitQuiz(@PathVariable("course_id") String _course_id, @PathVariable("quiz_id") String _quiz_id, @RequestParam(name="radio", required = true) String radio, RedirectAttributes redirectAttributes) { //this codes runs after a user submits the form on teh form.ftlh page
 
         answerList.add(radio);
         Application.dl.connect();
+        ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(_course_id, Application.currentUser.getEmail());
+
+
+
+
+        redirectAttributes.addFlashAttribute("lessonList", lessons);
         int correct = 0;
         ArrayList<String > cAnswerList = Application.dl.getCorrectAnswerList();
         for(String ans:answerList){
@@ -130,9 +137,30 @@ public class LessonDashboardController
 
         double score = Math.round((double)correct/(double)listSize * 100.0);
         redirectAttributes.addFlashAttribute("user", Application.currentUser);
+        redirectAttributes.addFlashAttribute("course_id", _course_id);
 
-        Quiz quiz = Application.dl.getQuiz(_quiz_id);
 
+        //insert score
+        Application.dl.saveQuiz(Application.currentUser.getUser_id(), _quiz_id, score + "");
+
+        ArrayList<QuizGrades> quizGrades = Application.dl.getQuizScores(Application.currentUser.getUser_id());
+
+        for(Lesson lesson : lessons){
+            lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
+            lesson.setMedia(Application.dl.getAllMultimedia(lesson.getId()+""));
+
+
+            for (QuizGrades grade : quizGrades) {
+                if (grade.getLesson_id().equals(lesson.getId() + "")) {
+                    lesson.setQuizScore(grade.getScore());
+                }
+            }
+        }
+
+        Application.dl.close();
+
+        //Quiz quiz = Application.dl.getQuiz(_quiz_id);
+        answerList.clear();
         return "redirect:/lessonDashboard";
     }
 

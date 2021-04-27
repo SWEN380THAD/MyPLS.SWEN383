@@ -32,14 +32,27 @@ public class DashboardController
 
         Application.dl.connect();
         ArrayList<Lesson> lessons = Application.dl.getLearnerLessons(course_id, _email);
+        ArrayList<QuizGrades> quizGrades = Application.dl.getQuizScores(Application.currentUser.getUser_id());
         redirectAttributes.addFlashAttribute("course_id", course_id);
         redirectAttributes.addFlashAttribute("email", _email);
         redirectAttributes.addFlashAttribute("lessonList",lessons);
 
+
+
         for(Lesson lesson : lessons){
             lesson.setQuiz_id(Application.dl.getLessonQuizID(lesson.getId()));
             lesson.setMedia(Application.dl.getAllMultimedia(lesson.getId()+""));
+
+            if (!(quizGrades == null)) {
+                for (QuizGrades grade : quizGrades) {
+                    if (grade.getLesson_id().equals(lesson.getId() + "")) {
+                        lesson.setQuizScore(grade.getScore());
+                    }
+                }
+            }
+
         }
+
         Application.dl.close();
 
         return "redirect:/lessonDashboard";
